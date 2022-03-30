@@ -59,7 +59,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `login`, `password`, `role`, `mail`) VALUES
-(1, 'Nejer', '000trin000', 1, 'Nejer6@gmail.com');
+(1, 'Admin', 'password', 1, 'Mail@gmail.com');
 
 --
 -- Индексы сохранённых таблиц
