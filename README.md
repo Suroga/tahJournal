@@ -3,11 +3,7 @@
 Расчёт данных для заполнения тахеометрического журнала
 
 [![Built with Cookiecutter Django](https://img.shields.io/badge/built%20with-Cookiecutter%20Django-ff69b4.svg?logo=cookiecutter)](https://github.com/cookiecutter/cookiecutter-django/)
-[![Black code style](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
-
-## Settings
-
-Moved to [settings](http://cookiecutter-django.readthedocs.io/en/latest/settings.html).
+[![Black code style](./journal/static/images/logo.png)](https://github.com/ambv/black)
 
 ## Basic Commands
 
