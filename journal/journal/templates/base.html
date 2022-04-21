@@ -8,16 +8,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Расчёт данных для заполнения тахеометрического журнала">
     <meta name="author" content="Daniel Roy Greenfeld">
-
+    
     <link rel="icon" href="{% static 'images/favicons/favicon.ico' %}">
-
+    
     {% block css %}
     <!-- Latest compiled and minified Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css" integrity="sha512-GQGU0fMMi238uA+a/bdWJfpUGKUkBdgfFdgBm72SUQ6BeyWjoY/ton0tEjH+OSH9iP4Dfh+7HM0I9f5eR0L/4w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- Your stuff: Third-party CSS libraries go here -->
-
+    
     <!-- This file stores project-specific CSS -->
     <link href="{% static 'css/project.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
     {% endblock %}
     <!-- Le javascript
@@ -36,6 +37,11 @@
   </head>
 
   <body>
+    <div id="header">    
+      <a href="index.html"><img src="{% static 'images/logo.png'%}" Width="80" Height="40"></a>
+      <p><a class="ssylka" href="{% url 'account_login' %}">Войти</a></p>
+      <p><a class="ssylka" href="{% url 'account_signup' %}">Регистрация</a></p>
+    </div>
 
     <div class="mb-1">
       <nav class="navbar navbar-expand-md navbar-light bg-light">
@@ -98,6 +104,11 @@
 
     </div> <!-- /container -->
 
+    <div id="footer">
+      <div id="x1">&copy;Информаторы 2022</div>
+      <div id="x2"><img src="{% static 'images/MIIGAiK.png' %}" Width="75" Height="95"></div>
+    </div>
+
     {% block modal %}{% endblock modal %}
 
     {% block inline_javascript %}
@@ -109,6 +120,8 @@
     </script>
     {% endcomment %}
     {% endblock inline_javascript %}
+
+
 
   </body>
 </html>
