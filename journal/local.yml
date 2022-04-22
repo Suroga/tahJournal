@@ -1,6 +1,7 @@
 version: '3'
 
 volumes:
+  pgadmin:
   journal_local_postgres_data: {}
   journal_local_postgres_data_backups: {}
 
@@ -34,6 +35,23 @@ services:
       - journal_local_postgres_data_backups:/backups:z
     env_file:
       - ./.envs/.local/.postgres
+    ports:
+       - "5432:5432"
+
+  pgadmin:
+    container_name: pgadmin_container
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-pgadmin4@pgadmin.org}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
+      PGADMIN_CONFIG_SERVER_MODE: 'False'
+    volumes:
+       - pgadmin:/var/lib/pgadmin
+
+    ports:
+      - "${PGADMIN_PORT:-5050}:80"
+    network_mode: host
+    restart: unless-stopped
 
   docs:
     image: journal_local_docs
@@ -51,3 +69,5 @@ services:
     ports:
       - "9000:9000"
     command: /start-docs
+
+

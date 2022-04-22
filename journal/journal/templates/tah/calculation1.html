@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+{% block content %}
+<!-- <script type='text/javascript'>
+    function updateElementIndex(el, prefix, ndx) {
+        var id_regex = new RegExp('(' + prefix + '-\\d+)');
+        var replacement = prefix + '-' + ndx;
+        if ($(el).attr("for")) $(el).attr("for", $(el).attr("for").replace(id_regex, replacement));
+        if (el.id) el.id = el.id.replace(id_regex, replacement);
+        if (el.name) el.name = el.name.replace(id_regex, replacement);
+    }
+    function cloneMore(selector, prefix) {
+        var newElement = $(selector).clone(true);
+        var total = $('#id_' + prefix + '-TOTAL_FORMS').val();
+        newElement.find(':input:not([type=button]):not([type=submit]):not([type=reset])').each(function() {
+            var name = $(this).attr('name').replace('-' + (total-1) + '-', '-' + total + '-');
+            var id = 'id_' + name;
+            $(this).attr({'name': name, 'id': id}).val('').removeAttr('checked');
+        });
+        newElement.find('label').each(function() {
+            var forValue = $(this).attr('for');
+            if (forValue) {
+              forValue = forValue.replace('-' + (total-1) + '-', '-' + total + '-');
+              $(this).attr({'for': forValue});
+            }
+        });
+        total++;
+        $('#id_' + prefix + '-TOTAL_FORMS').val(total);
+        $(selector).after(newElement);
+        var conditionRow = $('.form-row:not(:last)');
+        conditionRow.find('.btn.add-form-row')
+        .removeClass('btn-success').addClass('btn-danger')
+        .removeClass('add-form-row').addClass('remove-form-row')
+        .html('<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>');
+        return false;
+    }
+    function deleteForm(prefix, btn) {
+        var total = parseInt($('#id_' + prefix + '-TOTAL_FORMS').val());
+        if (total > 1){
+            btn.closest('.form-row').remove();
+            var forms = $('.form-row');
+            $('#id_' + prefix + '-TOTAL_FORMS').val(forms.length);
+            for (var i=0, formCount=forms.length; i<formCount; i++) {
+                $(forms.get(i)).find(':input').each(function() {
+                    updateElementIndex(this, prefix, i);
+                });
+            }
+        }
+        return false;
+    }
+    $(document).on('click', '.add-form-row', function(e){
+        e.preventDefault();
+        cloneMore('.form-row:last', 'form');
+        return false;
+    });
+    $(document).on('click', '.remove-form-row', function(e){
+        e.preventDefault();
+        deleteForm('form', $(this));
+        return false;
+    });
+</script> -->
+<form action="{% url 'tah:simplepocherk' %}" method="post">
+    {% csrf_token %}
+    {{ form1 }}
+    
+    {{ form2.management_form }}
+    {% for form in form2 %}
+        {{ form.non_field_errors }}
+        <div class="fieldWrapper">
+            {{ form.f1.errors }}
+            <label for="{{ form.f1.id_for_label }}">Email subject:</label>
+            {{ form.f1 }}
+        </div>
+        <div class="fieldWrapper">
+            {{ form.f2.errors }}
+            <label for="{{ form.f2.id_for_label }}">Your message:</label>
+            {{ form.f2 }}
+        </div>
+        <div class="fieldWrapper">
+            {{ form.f3.errors }}
+            <label for="{{ form.f3.id_for_label }}">Your email address:</label>
+            {{ form.f3 }}
+        </div>
+        <div class="fieldWrapper">
+            {{ form.f4.errors }}
+            <label for="{{ form.f4.id_for_label }}">CC yourself?</label>
+            {{ form.f4 }}
+        </div>    
+        <div class="fieldWrapper">
+            {{ form.f5.errors }}
+            <label for="{{ form.f5.id_for_label }}">CC yourself?</label>
+            {{ form.f5 }}
+        </div>    
+        <div class="fieldWrapper">
+            {{ form.f6.errors }}
+            <label for="{{ form.f6.id_for_label }}">CC yourself?</label>
+            {{ form.f6 }}
+        </div>    
+        <div class="fieldWrapper">
+            {{ form.f7.errors }}
+            <label for="{{ form.f7.id_for_label }}">CC yourself?</label>
+            {{ form.f7 }}
+        </div> 
+        <div class="input-group-append">
+            <button class="btn btn-success add-form-row">+</button>
+        </div>   
+    {% endfor %}
+    <input type="submit" value="Submit">
+    
+</form>
+{% endblock content %}
