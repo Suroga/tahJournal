@@ -8,7 +8,7 @@ from journal.users.forms import UserAdminChangeForm, UserAdminCreationForm
 User = get_user_model()
 
 
-@admin.register(User)
+# @admin.register(User)
 class UserAdmin(auth_admin.UserAdmin):
 
     form = UserAdminChangeForm

@@ -3,9 +3,9 @@ from django.template import loader
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
-
+import datetime
 from .forms import JournalForm, StationFormset, StationForm
-
+from .models import Journal, Station
 
 def index(request):
     context = {
@@ -21,23 +21,19 @@ def teor1(request):
 def calculation1(request):
     # if this is a POST request we need to process the form data
     if request.method == 'POST':
-        print(request.POST)
-        print(request.POST)
         # raise Exception
         # create a form instance and populate it with data from the request:
         form1 = JournalForm(request.POST)
         form2 = StationFormset(request.POST)
-        print(form1)
-        print(form2)
 
         # check whether it's valid:
         if form1.is_valid() and form2.is_valid():
-            satations = int(request.POST['form-TOTAL_FORMS'])
+            stations = int(request.POST['form-TOTAL_FORMS'])
 
             #ИЛЬЯ, ДЕЛАЙ ТУТ
-            print(form1.cleaned_data)
+            j = Journal.objects.create(journal_name=form1.cleaned_data['journal_name'], meters=form1.cleaned_data['meters'], meters_corrections=form1.cleaned_data['meters_corrections'], date_of_creation=datetime.datetime.now())
             for station in form2.cleaned_data:
-                print(station)
+                Station.objects.create(journal=j,station_name = station['station_name'], station_height = station['station_height'], sighting_points = station['sighting_points'], gorizontal_angle_gradus = station['gorizontal_angle_gradus'], gorizontal_angle_min = station['gorizontal_angle_min'], sighting_points_neighbors = station['sighting_points_neighbors'], sighting_points_neighbors_height = station['sighting_points_neighbors_height'], vertical_angle_gradus = station['vertical_angle_gradus'], vertical_angle_min = station['vertical_angle_min'], rail = station['rail'])
             #ИЛЬЯ, ДЕЛАЙ ТУТ
 
 
