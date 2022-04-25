@@ -7,15 +7,10 @@ import datetime
 from .forms import JournalForm, StationFormset, StationForm
 from .models import Journal, Station
 
-def index(request):
-    context = {
-        'data': "SomeBody Tolds me"
-        }
-    return render(request, 'tah/index.html', context)
 
-@login_required
-def teor1(request):
-    return render(request, 'teor/teor1.html')
+def teor(request, id):
+    teorId = id
+    return render(request, f'teor/teor{teorId}.html')
 
 @login_required
 def calculation1(request):

@@ -145,7 +145,7 @@ justify-content: center;
 body{
 margin: 0;
 }
-#X1{
+#x1{
 color: #DCDCDC;
 font-size: 41px;
 }
@@ -188,12 +188,10 @@ text-decoration: none;
 }
 
 #footer{
-  margin-top: 5%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 5% 0;
-  height: 15%; 
+  padding: 0 5% 0; 
   background-color: #2C2C2C;
 }
 body{
@@ -220,6 +218,15 @@ body{
   display: flex;
   justify-content: right;
 }
+
+.page{
+  overflow: hidden;
+  display: grid;
+  grid-template-areas: "header" "content" "footer";
+  grid-template-rows: auto 1fr auto;
+  min-height: 100vh;
+}
+
 
 
 

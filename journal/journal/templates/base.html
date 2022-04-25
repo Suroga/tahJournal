@@ -37,91 +37,84 @@
   </head>
 
   <body>
-    <div id="header">    
-      <a href="index.html"><img src="{% static 'images/logo.png'%}" Width="80" Height="40"></a>
-      <p><a class="ssylka" href="{% url 'account_login' %}">Войти</a></p>
-      <p><a class="ssylka" href="{% url 'account_signup' %}">Регистрация</a></p>
-    </div>
+    <div class = "page">
+      <div id="header">    
+        <a href="{% url 'home' %}"><img src="{% static 'images/logo.png' %}" Width="80" Height="40"></a>
+        <a class="nav-item">
+          <a class="nav-link" href="{% url 'about' %}">About</a>
+        </a>
+        {% if request.user.is_authenticated %}
+          <a class="nav-item">
+            {# URL provided by django-allauth/account/urls.py #}
+            <a class="nav-link" href="{% url 'users:detail' request.user.username  %}">{% translate "Мой профиль" %}</a>
+          </a>
+          <a class="nav-item">
+            {# URL provided by django-allauth/account/urls.py #}
+            <a class="nav-link" href="{% url 'account_logout' %}">{% translate "Выйти" %}</a>
+          </a>
+        {% else %}
+          {% if ACCOUNT_ALLOW_REGISTRATION %}
+          <a class="nav-item">
+            {# URL provided by django-allauth/account/urls.py #}
+            <a id="sign-up-link" class="nav-link" href="{% url 'account_signup' %}">{% translate "Зарегистрироватся" %}</a>
+          </a>
+          {% endif %}
+          <a class="nav-item">
+            {# URL provided by django-allauth/account/urls.py #}
+            <a id="log-in-link" class="nav-link" href="{% url 'account_login' %}">{% translate "Войти" %}</a>
+          </a>
+        {% endif %}
+      </div>
+      <div class="hamburger-menu">
+        <input id="menu__toggle" type="checkbox" />
+        <label class="menu__btn" for="menu__toggle">
+          <span></span>
+        </label>
+        <ul class="menu__box">
+          <h1>Теоретическое обоснование для теодолита 2Т30П</h1>
+          <li><a class="menu__item" href="{% url 'tah:teor' id=1 %}">Рекогносцировка хода</a></li>
+          <li><a class="menu__item" href="{% url 'tah:teor' id=2 %}">Проложение тахеометрического хода</a></li>
+          <li><a class="menu__item" href="{% url 'tah:teor' id=3 %}">Порядок измерений на пункте хода</a></li>
+          <li><a class="menu__item" href="{% url 'tah:teor' id=4 %}">Камеральная обработка результатов измерений</a></li>
+          <li><a class="menu__item" href="{% url 'tah:teor' id=5 %}">Ведомость вычисления координат точек хода</a></li>
+          <li><a class="menu__item" href="{% url 'tah:teor' id=6 %}">Ведомость вычисления высот тахеометрического хода</a></li>
+          <li><a class="menu__item" href="{% url 'tah:teor' id=7 %}">Тахеометрическая съемка</a></li>
+        </ul>
+      </div> 
+      <div class="container">
 
-    <div class="mb-1">
-      <nav class="navbar navbar-expand-md navbar-light bg-light">
-        <div class="container-fluid">
-          <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <a class="navbar-brand" href="{% url 'home' %}">Tah-journal</a>
+        {% if messages %}
+          {% for message in messages %}
+            <div class="alert alert-dismissible {% if message.tags %}alert-{{ message.tags }}{% endif %}">
+              {{ message }}
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+          {% endfor %}
+        {% endif %}
 
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-              <li class="nav-item active">
-                <a class="nav-link" href="{% url 'home' %}">Home <span class="visually-hidden">(current)</span></a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="{% url 'about' %}">About</a>
-              </li>
-              {% if request.user.is_authenticated %}
-                <li class="nav-item">
-                  {# URL provided by django-allauth/account/urls.py #}
-                  <a class="nav-link" href="{% url 'users:detail' request.user.username  %}">{% translate "My Profile" %}</a>
-                </li>
-                <li class="nav-item">
-                  {# URL provided by django-allauth/account/urls.py #}
-                  <a class="nav-link" href="{% url 'account_logout' %}">{% translate "Sign Out" %}</a>
-                </li>
-              {% else %}
-                {% if ACCOUNT_ALLOW_REGISTRATION %}
-              <li class="nav-item">
-                {# URL provided by django-allauth/account/urls.py #}
-                <a id="sign-up-link" class="nav-link" href="{% url 'account_signup' %}">{% translate "Зарегистрироватся" %}</a>
-              </li>
-              {% endif %}
-                <li class="nav-item">
-                  {# URL provided by django-allauth/account/urls.py #}
-                  <a id="log-in-link" class="nav-link" href="{% url 'account_login' %}">{% translate "Войти" %}</a>
-                </li>
-              {% endif %}
-            </ul>
-          </div>
-        </div>
-      </nav>
+        {% block content %}      
+        <p>Добро пожаловать к расчетам!)</p>
+        <li><a class="menu__item" href="{% url 'tah:calculation1' %}">Рекогносцировка хода</a></li>
+        {% endblock content %}
 
-    </div>
+      </div> <!-- /container -->
 
-    <div class="container">
+      <div id="footer">
+        <div id="x1">&copy;Информаторы 2022</div>
+        <div id="x2"><img src="{% static 'images/MIIGAiK.png' %}" Width="75" Height="95"></div>
+      </div>
 
-      {% if messages %}
-        {% for message in messages %}
-          <div class="alert alert-dismissible {% if message.tags %}alert-{{ message.tags }}{% endif %}">
-            {{ message }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-          </div>
-        {% endfor %}
-      {% endif %}
+      {% block modal %}{% endblock modal %}
 
-      {% block content %}
-        <p>Use this document as a way to quick start any new project.</p>
-      {% endblock content %}
-
-    </div> <!-- /container -->
-
-    <div id="footer">
-      <div id="x1">&copy;Информаторы 2022</div>
-      <div id="x2"><img src="{% static 'images/MIIGAiK.png' %}" Width="75" Height="95"></div>
-    </div>
-
-    {% block modal %}{% endblock modal %}
-
-    {% block inline_javascript %}
-    {% comment %}
-    Script tags with only code, no src (defer by default). To run
-    with a "defer" so that you run inline code:
-    <script>
-      window.addEventListener('DOMContentLoaded', () => {/* Run whatever you want */});
-    </script>
-    {% endcomment %}
-    {% endblock inline_javascript %}
-
-
-
+      {% block inline_javascript %}
+      {% comment %}
+      Script tags with only code, no src (defer by default). To run
+      with a "defer" so that you run inline code:
+      <script>
+        window.addEventListener('DOMContentLoaded', () => {/* Run whatever you want */});
+      </script>
+      {% endcomment %}
+      {% endblock inline_javascript %}
+  </div>
   </body>
 </html>

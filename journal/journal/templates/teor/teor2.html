@@ -1,30 +1,6 @@
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-        <title>Теория № 1</title>
-        <link rel="stylesheet" href="styleteor1.css">
-    </head>
-    <body>
-      <div id="header">    
-        <a href="index.html"><img src="logo.png" Width="100" Height="50"></a>
-        <p><a class="ssylka" href="author.html">Войти</a></p>
-      </div>
-      <div class="hamburger-menu">
-        <input id="menu__toggle" type="checkbox" />
-        <label class="menu__btn" for="menu__toggle">
-          <span></span>
-        </label>
-        <ul class="menu__box">
-          <h1>Теоретическое обоснование для теодолита 2Т30П</h1>
-          <li><a class="menu__item" href="teor1.html">Рекогносцировка хода</a></li>
-          <li><a class="menu__item" href="teor2.html">Проложение тахеометрического хода</a></li>
-          <li><a class="menu__item" href="teor3.html">Порядок измерений на пункте хода</a></li>
-          <li><a class="menu__item" href="teor4.html">Камеральная обработка результатов измерений</a></li>
-          <li><a class="menu__item" href="teor5.html">Ведомость вычисления координат точек хода</a></li>
-          <li><a class="menu__item" href="teor6.html">Ведомость вычисления высот тахеометрического хода</a></li>
-          <li><a class="menu__item" href="teor7.html">Тахеометрическая съемка</a></li>
-        </ul>
-      </div> 
+{% extends "base.html" %}
+{% block content %}
+      {% load static %}
       <div class="container">
         <div class="razrab">
           <h1>Проложение тахеометрического хода</h1>
@@ -32,15 +8,9 @@
           <p>1.	Установить прибор над пунктом (точкой) хода и привести его в рабочее положение. Реечники в это время устанавливают рейки на соседних пунктах хода в отвесном положении (см. ниже п.3).</p>
           <p>2.	Измеряется высота прибора от верха колышка до оси вращения трубы с точностью до десятых долей сантиметра. Измерение производят с помощью 2-х метровой металлической рулетки: сначала от верха колышка до верхней грани головки штатива, потом от верхней грани головки штатива до оси вращения зрительной трубы. Далее вычисляют среднее из результатов измерений и округляют его до целых сантиметров.</p>
           <p>3.	Установка вех и реек на предыдущем и последующем пунктах хода. Вехи следует устанавливать (втыкать в землю), за колом в створе наблюдаемой линии, как показано на рисунке. Рейки устанавливаются на колышек таким образом, чтобы их оси проходили через центр колышка и занимали отвесное положение. Для наиболее точной установки реек в отвесное положение следует использовать отвесы.</p>
-            <p><img src="MeasurementOrder.png" alt="Порядок измерений на пункте хода"></p>
+          <p><img src="{% static 'images/formulas/MeasurementOrder.png' %}" alt="Порядок измерений на пункте хода"></p>
       </div>
       <div class="container2">
         <div class="lox"><a href="payment.html" class="btn">Начать расчёт</a></div>
       </div>
-    <div id="footer">
-      <div id="x1">&copy;Информаторы 2022</div>
-      <div id="x2"><img src="MIIGAiK.png" Width="75" Height="95"></div>
-    </div>
-</div>
-</body>
-</html>
+{% endblock content %}
