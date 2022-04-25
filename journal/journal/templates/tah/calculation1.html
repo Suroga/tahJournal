@@ -3,33 +3,133 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 <form class="form-horizontal" method="POST" action="{% url 'tah:calculation1' %}">
 
+
     {% csrf_token %}
     {{ form1 }}
     
+
     {{ form2.management_form }}
     <div id="form_set">
-
         {% for form in form2.forms %}
+        <div>
             <div>
                 {{ form.non_field_errors }}
             </div>
-            <div>
-                {{ form.errors }}
+            <div class="div-table">
+            station_name {{ form.station_name }}
+            station_height {{ form.station_height }}
+                <div class="div-table-row">
+                    <div class="div-table-col">sighting_points1 {{ form.sighting_points1 }}</div>
+                    <div class="div-table-col">sighting_points2 {{ form.sighting_points2 }}</div>
+                    <div class="div-table-col">sighting_points3 {{ form.sighting_points3 }}</div>
+                    <div class="div-table-col">sighting_points4 {{ form.sighting_points4 }}</div>
+                </div>
+                <div class="div-table-row">
+                    <div class="div-table-col">gorizontal_angle_gradus1 {{ form.gorizontal_angle_gradus1 }}</div>
+                    <div class="div-table-col">gorizontal_angle_gradus2 {{ form.gorizontal_angle_gradus2 }}</div>
+                    <div class="div-table-col">gorizontal_angle_gradus3 {{ form.gorizontal_angle_gradus3 }}</div>
+                    <div class="div-table-col">gorizontal_angle_gradus4 {{ form.gorizontal_angle_gradus4 }}</div>
+                </div>    
+                <div class="div-table-row">
+                    <div class="div-table-col">gorizontal_angle_min1 {{ form.gorizontal_angle_min1 }}</div>
+                    <div class="div-table-col">gorizontal_angle_min2 {{ form.gorizontal_angle_min2 }}</div>
+                    <div class="div-table-col">gorizontal_angle_min3 {{ form.gorizontal_angle_min3 }}</div>
+                    <div class="div-table-col">gorizontal_angle_min4 {{ form.gorizontal_angle_min4 }}</div>
+                </div>
+                <div class="div-table-row">
+                    <div class="div-table-col">sighting_points_neighbors1 {{ form.sighting_points_neighbors1 }}</div>
+                    <div class="div-table-col" style="display:none">sighting_points_neighbors2 {{ form.sighting_points_neighbors2 }}</div>
+                </div>
+                <div class="div-table-row">
+                    <div class="div-table-col">sighting_points_neighbors_height1 {{ form.sighting_points_neighbors_height1 }}</div>
+                    <div class="div-table-col" style="display:none">sighting_points_neighbors_height2 {{ form.sighting_points_neighbors_height2 }}</div>
+                </div>
+                <div class="div-table-row">
+                    <div class="div-table-col">vertical_angle_gradus1 {{ form.vertical_angle_gradus1 }}</div>
+                    <div class="div-table-col">vertical_angle_gradus2 {{ form.vertical_angle_gradus2 }}</div>
+                    <div class="div-table-col" style="display:none">vertical_angle_gradus3 {{ form.vertical_angle_gradus3 }}</div>
+                    <div class="div-table-col" style="display:none">vertical_angle_gradus4 {{ form.vertical_angle_gradus4 }}</div>
+                </div>
+                <div class="div-table-row">
+                    <div class="div-table-col">vertical_angle_min1 {{ form.vertical_angle_min1 }}</div>
+                    <div class="div-table-col">vertical_angle_min2 {{ form.vertical_angle_min2 }}</div>
+                    <div style="display:none">vertical_angle_min3 {{ form.vertical_angle_min3 }}</div>
+                    <div style="display:none">vertical_angle_min4 {{ form.vertical_angle_min4 }}</div>
+                </div>
+                <div class="div-table-row">
+                    <div class="div-table-col">rail1 {{ form.rail1 }}</div>   
+                    <div class="div-table-col">rail2 {{ form.rail2 }}</div>
+                    <div style="display:none">rail3 {{ form.rail3 }}</div>
+                    <div style="display:none">rail4 {{ form.rail4 }}</div> 
+                </div>               
+                <div class='no_error'>
+                    {{ form.errors }}
+                </div>
             </div>
-            <div class='no_error'>
-                {{ form.as_ul }}
-            </div>
+        </div>
         {% endfor %}
         
+        <div id="empty_form" style="display:none">
+            <div class="div-table">
+                {{ form2.empty_form.station_name }}
+                {{ form2.empty_form.station_height }}
+                
+                <div class="div-table-row">
+                    <div class="div-table-col">sighting_points1 {{ form2.empty_form.sighting_points1 }}</div>
+                    <div class="div-table-col">sighting_points2 {{ form2.empty_form.sighting_points2 }}</div>
+                    <div class="div-table-col">sighting_points3 {{ form2.empty_form.sighting_points3 }}</div>
+                    <div class="div-table-col">sighting_points4 {{ form2.empty_form.sighting_points4 }}</div>
+                </div>
+                <div class="div-table-row">
+                    <div class="div-table-col">gorizontal_angle_gradus1 {{ form2.empty_form.gorizontal_angle_gradus1 }}</div> 
+                    <div class="div-table-col">gorizontal_angle_gradus2 {{ form2.empty_form.gorizontal_angle_gradus2 }}</div>
+                    <div class="div-table-col">gorizontal_angle_gradus3 {{ form2.empty_form.gorizontal_angle_gradus3 }}</div>
+                    <div class="div-table-col">gorizontal_angle_gradus4 {{ form2.empty_form.gorizontal_angle_gradus4 }}</div>
+                </div>    
+                <div class="div-table-row">
+                    <div class="div-table-col">gorizontal_angle_min1 {{ form2.empty_form.gorizontal_angle_min1 }}</div >
+                    <div class="div-table-col">gorizontal_angle_min2 {{ form2.empty_form.gorizontal_angle_min2 }}</div >
+                    <div class="div-table-col">gorizontal_angle_min3 {{ form2.empty_form.gorizontal_angle_min3 }}</div >
+                    <div class="div-table-col">gorizontal_angle_min4 {{ form2.empty_form.gorizontal_angle_min4 }}</div >
+                </div>
+                <div class="div-table-row">
+                    <div class="div-table-col">sighting_points_neighbors1 {{ form2.empty_form.sighting_points_neighbors1 }}</div >
+                    <div class="div-table-col">sighting_points_neighbors2 {{ form2.empty_form.sighting_points_neighbors2 }}</div >
+                </div>
+                <div class="div-table-row">
+                    <div class="div-table-col">sighting_points_neighbors_height1 {{ form2.empty_form.sighting_points_neighbors_height1 }}</div >
+                    <div class="div-table-col">sighting_points_neighbors_height2 {{ form2.empty_form.sighting_points_neighbors_height2 }}</div >
+                </div>
+                <div class="div-table-row">
+                    <div class="div-table-col">vertical_angle_gradus1 {{ form2.empty_form.vertical_angle_gradus1 }}</div>
+                    <div class="div-table-col">vertical_angle_gradus2 {{ form2.empty_form.vertical_angle_gradus2 }}</div>
+                    <div class="div-table-col">vertical_angle_gradus3 {{ form2.empty_form.vertical_angle_gradus3 }}</div>
+                    <div class="div-table-col">vertical_angle_gradus4 {{ form2.empty_form.vertical_angle_gradus4 }}</div>
+                </div>
+                <div class="div-table-row">
+                    <div class="div-table-col">vertical_angle_min1 {{ form2.empty_form.vertical_angle_min1 }}</div>
+                    <div class="div-table-col">vertical_angle_min2 {{ form2.empty_form.vertical_angle_min2 }}</div>
+                    <div class="div-table-col">vertical_angle_min3 {{ form2.empty_form.vertical_angle_min3 }}</div>
+                    <div class="div-table-col">vertical_angle_min4 {{ form2.empty_form.vertical_angle_min4 }}</div>
+                </div>
+                <div class="div-table-row">
+                    <div class="div-table-col">empty_form.rail1 {{ form2.empty_form.rail1 }}</div>
+                    <div class="div-table-col">empty_form.rail2 {{ form2.empty_form.rail2 }}</div>
+                    <div class="div-table-col">empty_form.rail3 {{ form2.empty_form.rail3 }}</div>
+                    <div class="div-table-col">empty_form.rail4 {{ form2.empty_form.rail4 }}</div>
+                </div>               
+                <div class="no_error">
+                    {{ form2.empty_form.errors }}
+                </div>
+            </div>
+        </div>
+    </div>    
+    <div class = "button-inline">
+        <input class='btn' type="button" value="Add more" id="add_more"></button>
+        <input class='btn' type="submit" value="Submit"></input>
     </div>
-    <input type="button" value="Add More" id="add_more">
-    <div id="empty_form" style="display:none">
-        <table class='no_error'>
-            {{ form2.empty_form }}
-        </table>
-    </div>
-    <input type="submit" value="Submit">
 </form>
+
 
 <script>
     $('#add_more').click(function() {

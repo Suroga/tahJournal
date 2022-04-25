@@ -9,20 +9,24 @@
   box-sizing: border-box;
   padding-right: 2%;
   padding-top: 0.3%;
+  padding-left: 0px;
 }
 /* скрываем чекбокс */
 #menu__toggle {
   opacity: 0;
 }
+
+.hamburger-menu{
+  display: flex;
+  align-items: center;
+}
+
 /* стилизуем кнопку */
 .menu__btn {
   display: flex; /* используем flex для центрирования содержимого */
   align-items: center;  /* центрируем содержимое кнопки */
   position: relative;
-  top: -69px;
-  left: 20px;
   width: 26px;
-  height: 26px;
   cursor: pointer;
   z-index: 1;
 }
@@ -51,7 +55,7 @@
   position: fixed;
   visibility: hidden;
   top: 0;
-  left: -100%;
+  right: -100%;
   width: 300px;
   height: 100%;
   margin: 0;
@@ -88,7 +92,7 @@
 }
 #menu__toggle:checked ~ .menu__box {
   visibility: visible;
-  left: 0;
+  right: 0;
 }
 
 .menu__btn > span,
@@ -231,3 +235,31 @@ body{
 
 
 
+
+
+
+
+
+.div-table {
+  display: table;         
+  width: auto;         
+  background-color: #eee;         
+  border: 1px solid #666666;         
+  border-spacing: 5px; /* cellspacing:poor IE support for  this */
+}
+.div-table-row {
+  display: table-row;
+  width: auto;
+  clear: both;
+}
+.div-table-col {
+  float: left; /* fix for  buggy browsers */
+  display: table-column;         
+  width: 200px;         
+  background-color: #ccc;  
+}
+
+.button-inline{
+  display:flex;
+  gap:10px;
+}

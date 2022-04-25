@@ -52,6 +52,10 @@
             {# URL provided by django-allauth/account/urls.py #}
             <a class="nav-link" href="{% url 'account_logout' %}">{% translate "Выйти" %}</a>
           </a>
+          <a class="nav-item">
+            {# URL provided by django-allauth/account/urls.py #}
+            <a class="nav-link" href="{% static 'account_logout' %}">{% translate "Выйти" %}</a>
+          </a>
         {% else %}
           {% if ACCOUNT_ALLOW_REGISTRATION %}
           <a class="nav-item">
@@ -64,23 +68,24 @@
             <a id="log-in-link" class="nav-link" href="{% url 'account_login' %}">{% translate "Войти" %}</a>
           </a>
         {% endif %}
+        <div class="hamburger-menu">
+          <input id="menu__toggle" type="checkbox" />
+          <label class="menu__btn" for="menu__toggle">
+            <span></span>
+          </label>
+          <ul class="menu__box">
+            <h1>Теоретическое обоснование для теодолита 2Т30П</h1>
+            <li><a class="menu__item" href="{% url 'tah:teor' id=1 %}">Рекогносцировка хода</a></li>
+            <li><a class="menu__item" href="{% url 'tah:teor' id=2 %}">Проложение тахеометрического хода</a></li>
+            <li><a class="menu__item" href="{% url 'tah:teor' id=3 %}">Порядок измерений на пункте хода</a></li>
+            <li><a class="menu__item" href="{% url 'tah:teor' id=4 %}">Камеральная обработка результатов измерений</a></li>
+            <li><a class="menu__item" href="{% url 'tah:teor' id=5 %}">Ведомость вычисления координат точек хода</a></li>
+            <li><a class="menu__item" href="{% url 'tah:teor' id=6 %}">Ведомость вычисления высот тахеометрического хода</a></li>
+            <li><a class="menu__item" href="{% url 'tah:teor' id=7 %}">Тахеометрическая съемка</a></li>
+          </ul>
+        </div>
       </div>
-      <div class="hamburger-menu">
-        <input id="menu__toggle" type="checkbox" />
-        <label class="menu__btn" for="menu__toggle">
-          <span></span>
-        </label>
-        <ul class="menu__box">
-          <h1>Теоретическое обоснование для теодолита 2Т30П</h1>
-          <li><a class="menu__item" href="{% url 'tah:teor' id=1 %}">Рекогносцировка хода</a></li>
-          <li><a class="menu__item" href="{% url 'tah:teor' id=2 %}">Проложение тахеометрического хода</a></li>
-          <li><a class="menu__item" href="{% url 'tah:teor' id=3 %}">Порядок измерений на пункте хода</a></li>
-          <li><a class="menu__item" href="{% url 'tah:teor' id=4 %}">Камеральная обработка результатов измерений</a></li>
-          <li><a class="menu__item" href="{% url 'tah:teor' id=5 %}">Ведомость вычисления координат точек хода</a></li>
-          <li><a class="menu__item" href="{% url 'tah:teor' id=6 %}">Ведомость вычисления высот тахеометрического хода</a></li>
-          <li><a class="menu__item" href="{% url 'tah:teor' id=7 %}">Тахеометрическая съемка</a></li>
-        </ul>
-      </div> 
+       
       <div class="container">
 
         {% if messages %}
@@ -96,12 +101,6 @@
         <p>Добро пожаловать к расчетам!)</p>
         <li><a class="menu__item" href="{% url 'tah:calculation1' %}">Рекогносцировка хода</a></li>
         {% endblock content %}
-
-      </div> <!-- /container -->
-
-      <div id="footer">
-        <div id="x1">&copy;Информаторы 2022</div>
-        <div id="x2"><img src="{% static 'images/MIIGAiK.png' %}" Width="75" Height="95"></div>
       </div>
 
       {% block modal %}{% endblock modal %}
@@ -114,7 +113,11 @@
         window.addEventListener('DOMContentLoaded', () => {/* Run whatever you want */});
       </script>
       {% endcomment %}
-      {% endblock inline_javascript %}
+      <div id="footer">
+        <div id="x1">&copy;Информаторы 2022</div>
+        <div id="x2"><img src="{% static 'images/MIIGAiK.png' %}" Width="75" Height="95"></div>
+      </div>
+       {% endblock inline_javascript %}
   </div>
   </body>
 </html>
