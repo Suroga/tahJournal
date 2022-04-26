@@ -130,6 +130,9 @@ transition-duration: .25s;
 
 
 #container {
+max-width: 800px;
+margin: 0 auto;
+padding: 40px 20px;
 background: #fff;
 margin: auto;
 height: auto;
@@ -192,7 +195,7 @@ text-decoration: none;
 }
 
 #footer{
-  margin-top: 15%;
+  margin-top: auto;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -217,6 +220,13 @@ body{
   padding-left: 30%;
   padding-right: 30%;
   text-align:  center;
+}
+
+.page{
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
 
