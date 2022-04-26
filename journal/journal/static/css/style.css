@@ -19,7 +19,7 @@
   display: flex; /* используем flex для центрирования содержимого */
   align-items: center;  /* центрируем содержимое кнопки */
   position: relative;
-  top: -69px;
+  top: -75px;
   left: 20px;
   width: 26px;
   height: 26px;
@@ -136,7 +136,7 @@ margin-bottom: 20px;
 margin-right: 2%;
 }
 .container2{
-margin-top: 30%;
+margin-top: 10%;
 height: 12%;
 display: flex;
 justify-content: center;
@@ -178,7 +178,6 @@ text-decoration: none;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 36pt;
 }
 
 .text1{
@@ -212,8 +211,7 @@ body{
   padding-right: 30%;
   text-align:  center;
 }
-.container2{
-  margin-top: 10%;
+#container2{
   height: 12%;
   display: flex;
   justify-content: right;
