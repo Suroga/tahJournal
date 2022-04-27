@@ -29,6 +29,8 @@
   width: 26px;
   cursor: pointer;
   z-index: 1;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 /* добавляем "гамбургер" */
 .menu__btn > span,
@@ -235,12 +237,13 @@ body{
   height: 0%;
 } */
 
+.nav-link{
+  color: #616161
+}
 
-
-
-
-
-
+.nav-link:hover{
+  color: #414141
+}
 
 
 .div-table {
@@ -265,4 +268,57 @@ body{
 .button-inline{
   display:flex;
   gap:10px;
+  margin-top: 2%;
+}
+.div-table{
+  margin-top:2%;
+}
+
+#qu{
+  margin-top:2%;
+}
+
+.div-table-row1{
+  display:flex;
+  flex-direction: column;
+}
+
+.div-table-row2{
+  display:flex;
+  flex-direction: column;
+}
+
+.div-table-row3{
+  display:flex;
+  flex-direction: column;
+}
+
+.div-table-row4{
+  display:flex;
+  flex-direction: column;
+}
+
+.div-table-row5{
+  display:flex;
+  flex-direction: column;
+}
+
+.div-table-row6{
+  display:flex;
+  flex-direction: column;
+}
+
+.div-table-row7{
+  display:flex;
+  flex-direction: column;
+}
+
+.div-table-row8{
+  display:flex;
+  flex-direction: column;
+}
+
+#PositionTable1{
+  display: flex;
+  flex-direction: row;
 }
