@@ -59,4 +59,4 @@ class StationForm(forms.Form):
 
 
 
-StationFormset = formset_factory(StationForm, extra=2)
+StationFormset = formset_factory(StationForm, extra=1)

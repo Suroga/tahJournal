@@ -11,7 +11,7 @@ from journal.users.models import User
 from .calculations import calculations 
 
 
-# @login_required
+@login_required
 def calculation1(request):
     # if this is a POST request we need to process the form data
     if request.method == 'POST':
@@ -24,6 +24,7 @@ def calculation1(request):
         if form1.is_valid() and form2.is_valid():
             print(form1.cleaned_data['journal_name'])
             stations = int(request.POST['form-TOTAL_FORMS'])
+            print(stations)
 
             username = request.user.username
             u = User.objects.get(username=username)
@@ -79,11 +80,13 @@ def teor(request, id):
     return render(request, f'teor/teor{teorId}.html')
 
 
-def index(request):
+def results(request):
     if request.method == 'POST':
         pass
     else:
         pass
+    return render(request, 'tah/results.html')
+    
     
     
 

@@ -320,5 +320,13 @@ body{
 
 #PositionTable1{
   display: flex;
-  flex-direction: row;
+  flex-direction: row;;
+}
+
+.LeftPos{
+  transform: translate(-13%,0);
+}
+
+.PaddingName1{
+  margin-bottom: 1%;
 }
