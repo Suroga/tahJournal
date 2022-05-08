@@ -341,7 +341,13 @@ body{
   flex-direction: row;;
 }
 
-.LeftPos{
+.FirstInputPadge{
+  display:block;
+  zoom: 0.8;
+}
+
+.SecondInputPadge{
+  display: none;
   zoom: 0.8;
 }
 

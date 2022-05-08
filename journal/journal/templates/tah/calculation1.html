@@ -2,7 +2,7 @@
 {% block content %}
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 <form class="form-horizontal" method="POST" action="{% url 'tah:calculation1' %}">
-<div class = "LeftPos">
+<div class = "FirstInputPadge">
 
     {% csrf_token %}
     <div id="qu">
@@ -188,11 +188,198 @@
             </div>
         </div>
     </div>
+    <input class='btn' type="button" value="Добавить станцию" id="add_more">
 </div>
+<div class = "SecondInputPadge">
+    {% csrf_token %}
+    <div id="qu">
+        {{ form1 }}
+    </div>
+    {{ form2.management_form }}
+    <div id="form_set">
+        {% for form in form2.forms %}
+        <div>
+            <div>
+                {{ form.form.non_field_errors }}
+            </div>
+            <div class="div-table">
+                <div class = "PaddingName1">
+                    Название станции {{ form.station_name }}
+                    Высота станции {{ form.station_height }}
+                </div>
+                <div id = "PositionTable1">
+                    <div class="div-table-row1">
+                        <div class="div-table-col">Визирный пункт 1 {{ form.sighting_points1 }}</div>
+                        <div class="div-table-col">Визирный пункт 2 {{ form.sighting_points2 }}</div>
+                        <div class="div-table-col">Визирный пункт 3 {{ form.sighting_points3 }}</div>
+                        <div class="div-table-col">Визирный пункт 4 {{ form.sighting_points4 }}</div>
+                    </div>
+                    <div class="div-table-row2">
+                        <div class="div-table-col">Горизонтальный угол 1 (°) {{ form.gorizontal_angle_gradus1 }}</div>
+                        <div class="div-table-col">Горизонтальный угол 2 (°) {{ form.gorizontal_angle_gradus2 }}</div>
+                        <div class="div-table-col">Горизонтальный угол 3 (°) {{ form.gorizontal_angle_gradus3 }}</div>
+                        <div class="div-table-col">Горизонтальный угол 4 (°) {{ form.gorizontal_angle_gradus4 }}</div>
+                    </div>    
+                    <div class="div-table-row3">
+                        <div class="div-table-col">Горизонтальный угол 1 (′) {{ form.gorizontal_angle_min1 }}</div>
+                        <div class="div-table-col">Горизонтальный угол 2 (′) {{ form.gorizontal_angle_min2 }}</div>
+                        <div class="div-table-col">Горизонтальный угол 3 (′) {{ form.gorizontal_angle_min3 }}</div>
+                        <div class="div-table-col">Горизонтальный угол 4 (′) {{ form.gorizontal_angle_min4 }}</div>
+                    </div>
+                    <div class="div-table-row4">
+                        <div class="div-table-col">Визирный пункт 1 {{ form.sighting_points_neighbors1 }}</div>
+                        <div class="div-table-col" style="display:none">Визирный пункт 2 {{ form.sighting_points_neighbors2 }}</div>
+                    </div>
+                    <div class="div-table-row5">
+                        <div class="div-table-col">Высота визирного пункта 1 {{ form.sighting_points_neighbors_height1 }}</div>
+                        <div class="div-table-col" style="display:none">Высота визирного пункта 2 {{ form.sighting_points_neighbors_height2 }}</div>
+                    </div>
+                    <div class="div-table-row6">
+                        <div class="div-table-col">Вертикальный угол 1 (°) {{ form.vertical_angle_gradus1 }}</div>
+                        <div class="div-table-col">Вертикальный угол 2 (°) {{ form.vertical_angle_gradus2 }}</div>
+                        <div class="div-table-col" style="display:none">Вертикальный угол 3 (°) {{ form.vertical_angle_gradus3 }}</div>
+                        <div class="div-table-col" style="display:none">Вертикальный угол 4 (°) {{ form.vertical_angle_gradus4 }}</div>
+                    </div>
+                    <div class="div-table-row7">
+                        <div class="div-table-col">Вертикальный угол 1 (′) {{ form.vertical_angle_min1 }}</div>
+                        <div class="div-table-col">Вертикальный угол 2 (′) {{ form.vertical_angle_min2 }}</div>
+                        <div style="display:none">Вертикальный угол 3 (′) {{ form.vertical_angle_min3 }}</div>
+                        <div style="display:none">Вертикальный угол 4 (′) {{ form.vertical_angle_min4 }}</div>
+                    </div>
+                    <div class="div-table-row8">
+                        <div class="div-table-col">Рейка 1 {{ form.rail1 }}</div>   
+                        <div class="div-table-col">Рейка 2 {{ form.rail2 }}</div>
+                        <div style="display:none">Рейка 3 {{ form.rail3 }}</div>
+                        <div style="display:none">Рейка 4 {{ form.rail4 }}</div> 
+                    </div>
+                </div>               
+                <div class='no_error'>
+                    {{ form.errors }}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        
+        <div id="empty_form" style="display:none">
+            <div class="div-table">
+                <div class = "PaddingName1">
+                    {{ form2.empty_form.station_name }}
+                    {{ form2.empty_form.station_height }}
+                </div>
+                <div class="div-table-row">
+                    <div class="div-table-col">Визирный пункт 1 {{ form2.empty_form.sighting_points1 }}</div>
+                    <div class="div-table-col">Визирный пункт 2 {{ form2.empty_form.sighting_points2 }}</div>
+                    <div class="div-table-col">Визирный пункт 3 {{ form2.empty_form.sighting_points3 }}</div>
+                    <div class="div-table-col">Визирный пункт 4 {{ form2.empty_form.sighting_points4 }}</div>
+                </div>
+                <div class="div-table-row">
+                    <div class="div-table-col">Горизонтальный угол 1 (°) {{ form2.empty_form.gorizontal_angle_gradus1 }}</div> 
+                    <div class="div-table-col">Горизонтальный угол 2 (°) {{ form2.empty_form.gorizontal_angle_gradus2 }}</div>
+                    <div class="div-table-col">Горизонтальный угол 3 (°) {{ form2.empty_form.gorizontal_angle_gradus3 }}</div>
+                    <div class="div-table-col">Горизонтальный угол 4 (°) {{ form2.empty_form.gorizontal_angle_gradus4 }}</div>
+                </div>    
+                <div class="div-table-row">
+                    <div class="div-table-col">Горизонтальный угол 1 (′) {{ form2.empty_form.gorizontal_angle_min1 }}</div >
+                    <div class="div-table-col">Горизонтальный угол 2 (′) {{ form2.empty_form.gorizontal_angle_min2 }}</div >
+                    <div class="div-table-col">Горизонтальный угол 3 (′) {{ form2.empty_form.gorizontal_angle_min3 }}</div >
+                    <div class="div-table-col">Горизонтальный угол 4 (′) {{ form2.empty_form.gorizontal_angle_min4 }}</div >
+                </div>
+                <div class="div-table-row">
+                    <div class="div-table-col">Визирный пункт 1 {{ form2.empty_form.sighting_points_neighbors1 }}</div >
+                    <div class="div-table-col">Визирный пункт 2 {{ form2.empty_form.sighting_points_neighbors2 }}</div >
+                </div>
+                <div class="div-table-row">
+                    <div class="div-table-col">Высота визирного пункта 1 {{ form2.empty_form.sighting_points_neighbors_height1 }}</div >
+                    <div class="div-table-col">Высота визирного пункта 2 {{ form2.empty_form.sighting_points_neighbors_height2 }}</div >
+                </div>
+                <div class="div-table-row">
+                    <div class="div-table-col">Вертикальный угол 1 (°) {{ form2.empty_form.vertical_angle_gradus1 }}</div>
+                    <div class="div-table-col">Вертикальный угол 2 (°) {{ form2.empty_form.vertical_angle_gradus2 }}</div>
+                    <div class="div-table-col">Вертикальный угол 3 (°) {{ form2.empty_form.vertical_angle_gradus3 }}</div>
+                    <div class="div-table-col">Вертикальный угол 4 (°) {{ form2.empty_form.vertical_angle_gradus4 }}</div>
+                </div>
+                <div class="div-table-row">
+                    <div class="div-table-col">Вертикальный угол 1 (′) {{ form2.empty_form.vertical_angle_min1 }}</div>
+                    <div class="div-table-col">Вертикальный угол 2 (′) {{ form2.empty_form.vertical_angle_min2 }}</div>
+                    <div class="div-table-col">Вертикальный угол 3 (′) {{ form2.empty_form.vertical_angle_min3 }}</div>
+                    <div class="div-table-col">Вертикальный угол 4 (′) {{ form2.empty_form.vertical_angle_min4 }}</div>
+                </div>
+                <div class="div-table-row">
+                    <div class="div-table-col">Рейка 1 {{ form2.empty_form.rail1 }}</div>
+                    <div class="div-table-col">Рейка 2 {{ form2.empty_form.rail2 }}</div>
+                    <div class="div-table-col">Рейка 3 {{ form2.empty_form.rail3 }}</div>
+                    <div class="div-table-col">Рейка 4 {{ form2.empty_form.rail4 }}</div>
+                </div>               
+                <div class="no_error">
+                    {{ form2.empty_form.errors }}
+                </div>
+            </div>
+        </div>
+    </div>
     
-    <div class = "button-inline">
-        <input class='btn' type="button" value="Add more" id="add_more"></button>
-        <input class='btn' type="submit" value="Submit"></input>
+    <div>
+        <div>
+            {{ form2.empty_form.non_field_errors }}
+        </div>
+        <div class="div-table">
+        Название станции {{ form2.empty_form.station_name }}
+        Высота станции {{ form2.empty_form.station_height }}
+            <div id = "PositionTable1">
+                <div class="div-table-row1">
+                    <div class="div-table-col">Визирный пункт 1 {{ form2.empty_form.sighting_points1 }}</div>
+                    <div class="div-table-col">Визирный пункт 2 {{ form2.empty_form.sighting_points2 }}</div>
+                    <div class="div-table-col">Визирный пункт 3 {{ form2.empty_form.sighting_points3 }}</div>
+                    <div class="div-table-col">Визирный пункт 4 {{ form2.empty_form.sighting_points4 }}</div>
+                </div>
+                <div class="div-table-row2">
+                    <div class="div-table-col">Горизонтальный угол 1 (°) {{ form2.empty_form.gorizontal_angle_gradus1 }}</div>
+                    <div class="div-table-col">Горизонтальный угол 2 (°) {{ form2.empty_form.gorizontal_angle_gradus2 }}</div>
+                    <div class="div-table-col">Горизонтальный угол 3 (°) {{ form2.empty_form.gorizontal_angle_gradus3 }}</div>
+                    <div class="div-table-col">Горизонтальный угол 4 (°) {{ form2.empty_form.gorizontal_angle_gradus4 }}</div>
+                </div>    
+                <div class="div-table-row3">
+                    <div class="div-table-col">Горизонтальный угол 1 (′) {{ form2.empty_form.gorizontal_angle_min1 }}</div>
+                    <div class="div-table-col">Горизонтальный угол 2 (′) {{ form2.empty_form.gorizontal_angle_min2 }}</div>
+                    <div class="div-table-col">Горизонтальный угол 3 (′) {{ form2.empty_form.gorizontal_angle_min3 }}</div>
+                    <div class="div-table-col">Горизонтальный угол 4 (′) {{ form2.empty_form.gorizontal_angle_min4 }}</div>
+                </div>
+                <div class="div-table-row4">
+                    <div class="div-table-col">Визирный пункт 1 {{ form2.empty_form.sighting_points_neighbors1 }}</div>
+                    <div class="div-table-col" style="display:none">Визирный пункт 2 {{ form2.empty_form.sighting_points_neighbors2 }}</div>
+                </div>
+                <div class="div-table-row5">
+                    <div class="div-table-col">Высота визирного пункта 1 {{ form2.empty_form.sighting_points_neighbors_height1 }}</div>
+                    <div class="div-table-col" style="display:none">Высота визирного пункта 2 {{ form2.empty_form.sighting_points_neighbors_height2 }}</div>
+                </div>
+                <div class="div-table-row6">
+                    <div class="div-table-col">Вертикальный угол 1 (°) {{ form2.empty_form.vertical_angle_gradus1 }}</div>
+                    <div class="div-table-col">Вертикальный угол 2 (°) {{ form2.empty_form.vertical_angle_gradus2 }}</div>
+                    <div class="div-table-col" style="display:none">Вертикальный угол 3 (°) {{ form2.empty_form.vertical_angle_gradus3 }}</div>
+                    <div class="div-table-col" style="display:none">Вертикальный угол 4 (°) {{ form2.empty_form.vertical_angle_gradus4 }}</div>
+                </div>
+                <div class="div-table-row7">
+                    <div class="div-table-col">Вертикальный угол 1 (′) {{ form2.empty_form.vertical_angle_min1 }}</div>
+                    <div class="div-table-col">Вертикальный угол 2 (′) {{ form2.empty_form.vertical_angle_min2 }}</div>
+                    <div style="display:none">Вертикальный угол 3 (′) {{ form2.empty_form.vertical_angle_min3 }}</div>
+                    <div style="display:none">Вертикальный угол 4 (′) {{ form2.empty_form.vertical_angle_min4 }}</div>
+                </div>
+                <div class="div-table-row8">
+                    <div style="display:none">Рейка 1 {{ form2.empty_form.rail1 }}</div>   
+                    <div style="display:none">Рейка 2 {{ form2.empty_form.rail2 }}</div>
+                    <div class="div-table-col">Рейка 3 {{ form2.empty_form.rail3 }}</div>
+                    <div class="div-table-col">Рейка 4 {{ form2.empty_form.rail4 }}</div> 
+                </div>
+            </div>               
+            <div class='no_error'>
+                {{ form2.empty_form.errors }}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class = "button-inline">
+        <input class='btn' type="button" value="Следующая форма" id="swipe">
+        <input class='btn' type="submit" value="Расчитать">
     </div>
 </form>
 
