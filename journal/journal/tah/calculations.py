@@ -96,8 +96,13 @@ def calculations(JournalForm, StationForm):
     df[0][0] = "Журнал Тахеометрического хода"
     df[0][2] = "Поправки"
     
-    str6 = [nn for x in range(df.shape[1])]
-    #str6[]
+    str6 = ['№ станции', 'Визир. пункты', 'Л/П', nn,nn,nn,nn, 'Визир. пункты', 'Л/П', 'Отсчеты', nn, 'По рейке', 'МО, угол', nn, 'l,D,S', 'h1,d,h', 'hпр,hобр,hср', nn,nn]
+    #print(len(str6))
+    for i in range(df.shape[1]):
+        df[i][6] = str6[i]
+    
+    df[17][9] = "ΔD"
+    df[18][9] = "Δh"
     df[2][5] = "Горизонтальный круг"
     df[5][5] = "Угол, среднее"
     df[8][5] = "Вертикальный угол"
@@ -118,6 +123,7 @@ def calculations(JournalForm, StationForm):
     for i in range(11, len(df[8])-4, 3):
         df[8][i] = "Л"
         df[8][i+1] = "П"
+    
     
     station_names = []
     station_heights = []
@@ -226,14 +232,52 @@ def calculations(JournalForm, StationForm):
             #rails.append(float(i['rail4']))
         count1+=1
 
+    
+    k1=0
+    for i in range(8, len(df[0])-2, 6):
+        df[0][i] = station_names[k1]
+        df[0][i+2] = station_heights[k1]
+        if k1+1 < len(station_names):
+            k1+=1
+    k1=0
+    for i in range(8, len(df[1])-3, 6):
+        df[1][i] = sighting_points[k1]    
+        df[1][i+1] = sighting_points[k1+1]
+        df[1][i+2] = sighting_points[k1+2]
+        df[1][i+3] = sighting_points[k1+3]
+        df[3][i] = gorizontal_angles_gradus[k1]
+        df[3][i+1] = gorizontal_angles_gradus[k1+1]
+        df[3][i+2] = gorizontal_angles_gradus[k1+2]
+        df[3][i+3] = gorizontal_angles_gradus[k1+3]
+        df[4][i] = gorizontal_angles_min[k1]
+        df[4][i+1] = gorizontal_angles_min[k1+1]
+        df[4][i+2] = gorizontal_angles_min[k1+2]
+        df[4][i+3] = gorizontal_angles_min[k1+3]
+    
+        if k1+4 < len(sighting_points):
+            k1+=4
+    k1=0
+    k2=0
+    for i in range(11, len(df[7])-4, 3):
+        df[7][i] = sighting_points_neighbors[k1]
+        df[7][i+1] = sighting_points_neighbors_heights[k1]
+        df[9][i] = vertical_angles_gradus[k2]
+        df[9][i+1] = vertical_angles_gradus[k2+1]
+        df[10][i] = vertical_angles_min[k2]
+        df[10][i+1] = vertical_angles_min[k2+1]
+        df[11][i] = rails[k2]
+        df[11][i+1] = rails[k2+1]
+        if k1+1 < len(sighting_points_neighbors):
+            k1+=1
+        if k2+2 < len(vertical_angles_gradus):
+            k2+=2
 
 
 
-
-    mat = [meters, meters_corrections, station_names, station_heights, sighting_points, gorizontal_angles_gradus,
-    gorizontal_angles_min, sighting_points_neighbors, sighting_points_neighbors_heights,
-    vertical_angles_gradus, vertical_angles_min, rails]
-    print('meters: ', mat[0])
+    #mat = [meters, meters_corrections, station_names, station_heights, sighting_points, gorizontal_angles_gradus,
+    #gorizontal_angles_min, sighting_points_neighbors, sighting_points_neighbors_heights,
+    #vertical_angles_gradus, vertical_angles_min, rails]
+    '''print('meters: ', mat[0])
     print('meters_corrections: ', mat[1])
     print('station_names: ', mat[2])
     print('stastion_heights: ', mat[3])
@@ -244,8 +288,8 @@ def calculations(JournalForm, StationForm):
     print('sighting_points_neighbors_heights: ', mat[8])
     print('vertical_angles_gradus: ', mat[9])
     print('vertical_angles_min: ', mat[10])
-    print('rails: ', mat[11])
-
+    print('rails: ', mat[11])'''
+    print(df)
     #return()
 
 #calculations(JoF, stf2)
@@ -263,7 +307,7 @@ def calculations(JournalForm, StationForm):
 
 
 
-    '''for j in range(1, df.shape[1]): 
+    for j in range(1, df.shape[1]): 
         value = df.at[1, j] 
         if type(value) == type(np.nan):
             index_1_table = j
@@ -838,7 +882,7 @@ def calculations(JournalForm, StationForm):
     #print(U_column)
     def tabl1(db, db2, ar1_5, ar2_5, ar1_6, ar2_6, ar1_12, ar2_12, ar1_13,
     ar2_13, ar1_15, ar2_15, ar3_15, ar1_16, ar2_16, ar3_16,ar1_17, ar2_17, 
-    ar3_17, ar1_20):#, path1, filename1):    
+    ar3_17, ar1_20, d_h):#, path1, filename1):    
         
         from pandas.io.excel import ExcelWriter
         import numpy as np
@@ -867,7 +911,7 @@ def calculations(JournalForm, StationForm):
             if (k1+2) <= len(ar1_5)-1:
                 k1+=2
                 
-        for i in range(3, len(lsttodf12)-1, 3):
+        for i in range(3, len(lsttodf12)-3, 3):         #len(lsttodf12)-3  раньше было:  len(lsttodf12)-1
             lsttodf12[i] = ar1_12[k2]
             lsttodf12[i+1] = ar2_12[k2]
             lsttodf13[i] = ar1_13[k2]
@@ -877,7 +921,7 @@ def calculations(JournalForm, StationForm):
         k0 = 0
         k1 = 0
         #k2 = 0
-        for i in range(2, len(lsttodf15)-2, 3):        
+        for i in range(2, len(lsttodf15)-3, 3):        #len(lsttodf15)-3  раньше было:  len(lsttodf15)-2
             lsttodf15[i] = ar1_15[k0]
             lsttodf15[i+1] = ar2_15[k0]
             lsttodf15[i+2] = ar3_15[k0]
@@ -900,19 +944,25 @@ def calculations(JournalForm, StationForm):
             if ar1_20[i] == 1:
                 lsttodf20[k0] = ar1_20[i]
                 lsttodf20[k0+1] = ar1_20[i+1]
-            if k0+6 < len(lsttodf20)-2:
+            if k0+6 < len(lsttodf20)-3:        # раньше было: if k0+6 < len(lsttodf20)-2:
                 k0+=6       
         db2[5] = lsttodf5
         db2[6] = lsttodf6
         db2[12] = lsttodf12
         db2[13] = lsttodf13
-        db2[15] = lsttodf15
-        db2[16] = lsttodf16 
-        db2[17] = lsttodf17 
-        db2[20] = lsttodf20
+        db2[15-1] = lsttodf15
+        db2[16-1] = lsttodf16 
+        db2[17-1] = lsttodf17 
+        db2[20-3] = lsttodf20
         db.iloc[8:db.shape[0], 0:db.shape[1]] = db2   
-        dbp = db.drop([14, 18, 19], axis=1)    
-        return(dbp)
+        #dbp = db.drop([14, 18, 19], axis=1)    
+        k0=0
+        for i in range(11, len(db[18])-7, 6):
+            db[18][i] = d_h[k0]
+            if k0+1 < len(d_h):
+                k0+=1
+            
+        return(db)    # раньше было: return(dbp)
 
     kolvostan = (len(df2[0]) - int(df2.isna().sum()[0]))//2
     stoLperar = [sump_dx,sumt_dx,fx_dx,fs_s,fs_div_sum_s,one_div_n,sum_dx_popravka]
@@ -1053,7 +1103,7 @@ def calculations(JournalForm, StationForm):
 
     sheet1 = tabl1(df, df2, array_gor_angle_gr, array_gor_angle_gr_mean, array_gor_angle_min,
     array_gor_angle_min_mean, array_angle_gr_mo_2t30, array_angle_gr_v_2t30, array_angle_min_mo_2t30,
-    array_angle_min_v_2t30, I, D, S, h1, dl, h, h_pr, h_obr, h_mean, U_column)   #, p_, f_ )
+    array_angle_min_v_2t30, I, D, S, h1, dl, h, h_pr, h_obr, h_mean, U_column, V_column)   #, p_, f_ )
 
     sheet2 = tabl2(kolvostan, n_stantsiy, array_gor_angle_gr_mean, sump_gor_angle_gr_mean,
     sumt_gor_angle_gr_mean, array_gor_angle_min_mean, array_gor_angle_min_popravka, 
@@ -1062,7 +1112,7 @@ def calculations(JournalForm, StationForm):
     sum_s, array_s, array_dx, array_dx_popravka, stoLperar, array_dy, array_dy_popravka,
     stoMperar, array_dx_new, sump_dx_new, array_dy_new, stoOperar, array_x, last_x, array_y, last_y,
     array_s, sum_s, h_mean, stoTperar, array_v_i, sum_v_i, fh2_dop, array_h_new,
-    sum_h_new, array_h, last_h)'''
+    sum_h_new, array_h, last_h)
 
     
     #tabl2(kolvostan, n_stantsiy, array_gor_angle_gr_mean, sump_gor_angle_gr_mean,
@@ -1075,4 +1125,4 @@ def calculations(JournalForm, StationForm):
     #vivodexl(p_, f_, sheet1, sheet2)
     
     #return(sheet1, sheet2)
-    return()
+    return(sheet1, sheet2)
