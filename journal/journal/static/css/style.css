@@ -78,7 +78,10 @@
   text-decoration: none;
 }
 .menu__item:hover {
-  background-color: #CFD8DC;
+  background-color: #C4C4C4;
+  border-radius: 13px;
+  transition-duration: 0.25s;
+  color: #333;
 }
 
 #menu__toggle:checked ~ .menu__btn > span {
@@ -204,10 +207,17 @@ text-decoration: none;
   padding: 0 5% 0;
   height: 15%; 
   background-color: #2C2C2C;
+  -ms-user-select: none;
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  pointer-events: none;
   }
+
 body{
   margin: 0;
 }
+
 #X1{
   color: #DCDCDC;
   font-size: 41px;
@@ -278,6 +288,14 @@ body{
   margin-top:2%;
 }
 
+#qu label{
+  margin-right: 1%;;
+}
+
+#qu input{
+  margin-right: 1%;;
+}
+
 .div-table-row1{
   display:flex;
   flex-direction: column;
@@ -324,9 +342,10 @@ body{
 }
 
 .LeftPos{
-  transform: translate(-13%,0);
+  zoom: 0.8;
 }
 
 .PaddingName1{
   margin-bottom: 1%;
 }
+

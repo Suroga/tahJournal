@@ -4,9 +4,9 @@ from django.forms import formset_factory
 
 
 class JournalForm(forms.Form):
-    journal_name = forms.CharField(label='journal_name', max_length=100)
-    meters = forms.CharField(label='meters', max_length=100)
-    meters_corrections = forms.CharField(label='meters_corrections', max_length=100)
+    journal_name = forms.CharField(label='Название журнала', max_length=100)
+    meters = forms.CharField(label='Метры', max_length=100)
+    meters_corrections = forms.CharField(label='Метры исправленные', max_length=100)
 
 class StationForm(forms.Form):
     station_name = forms.CharField(label='station_name', max_length=100)
