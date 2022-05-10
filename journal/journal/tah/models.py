@@ -93,3 +93,9 @@ class Station(models.Model):
 # class JournalResults(models.Model):
 #     # связь с Journal
 #     pass
+
+class Vedomost(models.Model):
+    array_dir_angle_gr = models.IntegerField()
+    array_dir_angle_min = models.IntegerField()
+    last_dir_angle_gr = models.IntegerField()
+    last_dir_angle_min = models.IntegerField()

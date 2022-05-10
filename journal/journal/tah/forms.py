@@ -1,4 +1,5 @@
 from termios import FF1
+from unittest.util import _MAX_LENGTH
 from django import forms
 from django.forms import formset_factory
 
@@ -48,6 +49,13 @@ class StationForm(forms.Form):
     # right_left2 = forms.CharField(label='right_or_left2', max_length=100)
     # right_left3 = forms.CharField(label='right_or_left3', max_length=100)
     # right_left4 = forms.CharField(label='right_or_left4', max_length=100)
+
+class VedomostForm(forms.Form):
+    array_dir_angle_gr = forms.IntegerField(label='array_dir_angle_gr')
+    array_dir_angle_min = forms.IntegerField(label='array_dir_angle_min')
+    last_dir_angle_gr = forms.IntegerField(label='last_dir_angle_gr')
+    last_dir_angle_min = forms.IntegerField(label='last_dir_angle_min')
+
 
 
 
