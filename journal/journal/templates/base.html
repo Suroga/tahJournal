@@ -94,8 +94,15 @@
         {% endif %}
 
         {% block content %}      
-        <p>Добро пожаловать к расчетам!)</p>
-        <li><a class="menu__item" href="{% url 'tah:calculation1' %}">Рекогносцировка хода</a></li>
+        {% comment %} <p>Добро пожаловать к расчетам!)</p>
+        <li><a class="menu__item" href="{% url 'tah:calculation1' %}">Рекогносцировка хода</a></li> {% endcomment %}
+        <div id ="mainpadgecontainer">
+          <div class = "mainlogo"><img src="{% static 'images/logo.png' %}" alt = "Информаторы"></div>
+          <div class = 'maindiv'>
+            <div class = "maintext">Добро пожаловать на страницу тахеометрического журнала</div>
+            <div class = "mainbutton"><a class="btn" href="{% url 'tah:calculation1' %}">Начать расчёт</a></div>
+          </div>
+        </div>  
         {% endblock content %}
       </div>
 
