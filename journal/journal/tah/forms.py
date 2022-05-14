@@ -53,7 +53,7 @@ class StationForm(forms.Form):
 class VedomostForm(forms.Form):
     array_dir_angle_gr = forms.IntegerField(label='array_dir_angle_gr')
     array_dir_angle_min = forms.IntegerField(label='array_dir_angle_min')
-    last_dir_angle_gr = forms.IntegerField(label='last_dir_angle_gr')
+    last_dir_angle_gr   = forms.IntegerField(label='last_dir_angle_gr')
     last_dir_angle_min = forms.IntegerField(label='last_dir_angle_min')
 
 

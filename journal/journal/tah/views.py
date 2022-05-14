@@ -5,8 +5,8 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 import datetime
-from .forms import JournalForm, StationFormset, StationForm
-from .models import Journal, Station
+from .forms import JournalForm, StationFormset, StationForm, VedomostForm
+from .models import Journal, Station, Vedomost
 from journal.users.models import User
 from .calculations import calculations 
 
@@ -19,9 +19,10 @@ def calculation1(request):
         # create a form instance and populate it with data from the request:
         form1 = JournalForm(request.POST)
         form2 = StationFormset(request.POST)
+        form3 = VedomostForm(request.POST)
 
         # check whether it's valid:
-        if form1.is_valid() and form2.is_valid():
+        if form1.is_valid() and form2.is_valid() and form3.is_valid():
             print(form1.cleaned_data['journal_name'])
             stations = int(request.POST['form-TOTAL_FORMS'])
             print(stations)
@@ -63,16 +64,18 @@ def calculation1(request):
                     rail3=station['rail3'],
                     rail4=station['rail4'],                                    
                     )
+            v = Vedomost.objects.create( array_dir_angle_gr = form3.cleaned_data['array_dir_angle_gr'], array_dir_angle_min = form3.cleaned_data['array_dir_angle_min'], last_dir_angle_gr = form3.cleaned_data['last_dir_angle_gr'], last_dir_angle_min = form3.cleaned_data['last_dir_angle_min'], date_of_creation=datetime.datetime.now(), user=u)
             #ИЛЬЯ, ДЕЛАЙ ТУТ
             calculations()            
-            return render(request, 'tah/calculation1.html', {'form1': form1, 'form2': form2})
+            return render(request, 'tah/calculation1.html', {'form1': form1, 'form2': form2, 'form3': form3})
         else:
-            return render(request, 'tah/calculation1.html', {'form1': form1, 'form2': form2})
+            return render(request, 'tah/calculation1.html', {'form1': form1, 'form2': form2, 'form3': form3})
     else:
         form1 = JournalForm()
         form2 = StationFormset()
+        form3 = VedomostForm()
 
-    return render(request, 'tah/calculation1.html', {'form1': form1, 'form2': form2})
+    return render(request, 'tah/calculation1.html', {'form1': form1, 'form2': form2, 'form3': form3})
 
 
 def teor(request, id):
