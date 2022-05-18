@@ -96,6 +96,14 @@ class Station(models.Model):
 
 class Vedomost(models.Model):
     array_dir_angle_gr = models.IntegerField()
-    array_dir_angle_min = models.IntegerField()
+    array_dir_angle_min = models.FloatField()
     last_dir_angle_gr = models.IntegerField()
-    last_dir_angle_min = models.IntegerField()
+    last_dir_angle_min = models.FloatField()
+
+# class Taheometria(models.Model):
+#     station  = models.CharField(max_length=100)
+#     kl_deg = models.IntegerField()
+#     kl_min = models.FloatField()
+#     kp_deg = models.IntegerField()
+#     kp_min = models.FloatField()
+#     picket = models.CharField(max_length=100)

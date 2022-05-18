@@ -50,7 +50,6 @@ services:
 
     ports:
       - "${PGADMIN_PORT:-5050}:80"
-    network_mode: host
     restart: unless-stopped
 
   docs:

@@ -372,6 +372,7 @@ margin: 0;
 
 .SecondInputPadge{
   display: none;
+  width: 100%;
   zoom: 0.8;
 }
 
