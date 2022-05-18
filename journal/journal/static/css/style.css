@@ -248,7 +248,7 @@ margin: 0;
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  min-height: 120vh;
 }
 
 
@@ -374,6 +374,10 @@ margin: 0;
   display: none;
   width: 100%;
   zoom: 0.8;
+}
+
+.SecondInputPadge .div-table{
+  margin-left: 22%;
 }
 
 .PaddingName1{

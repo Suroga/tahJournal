@@ -3,28 +3,9 @@ from pandas.io.excel import ExcelWriter
 from decimal import *
 from math import *
 import numpy as np
+import json
 
 JoF = {"meters": '20, 40, 60, 80, 100, 120, 140, 160', "meters_corrections": '0, 0, 0, 0, 0, 0, 0, 0' }
-
-StF = [{'station_name': '216', 'station_height': '1.40', 'sighting_points1': '215', 'sighting_points2': '101', 'sighting_points3': '215', 'sighting_points4': '101',
-'gorizontal_angle_gradus': '0, 237, 180, 57',  'gorizontal_angle_min': '0.5, 46.0, 1.0, 46.0',
-'sighting_points_neighbors': '101', 'sighting_points_neighbors_height': '2.84', 
-'vertical_angle_gradus': '0, 0', 'vertical_angle_min': '-40.0, 39.0', 'rail': '118.1, 118.4'}, 
-
-{'station_name': '101', 'station_height': '1.35', 'sighting_points1': '216', 'sighting_points2': '102', 'sighting_points3': '216', 'sighting_points': '102', 
-'gorizontal_angle_gradus': '0, 137, 180, 317','gorizontal_angle_min': '0.5, 1.5, 1.0, 1.5', 
-'sighting_points_neighbors': '216, 102', 'sighting_points_neighbors_height': '1.82, 2.76', 
-'vertical_angle_gradus': '1, -1, 0, 0', 'vertical_angle_min': '35.5, -36.0, 15.0, -15.5', 'rail': '118.4, 118.2, 157.3, 157.5'}, 
-
-{'station_name': '102', 'station_height': '1.33', 'sighting_points1': '101', 'sighting_points2': '225', 'sighting_points3': '101', 'sighting_points4': '225',
-'gorizontal_angle_gradus': '0, 225, 180, 45','gorizontal_angle_min': '0.5, 58.5, 1.0, 59.5', 
-'sighting_points_neighbors': '101, 225', 'sighting_points_neighbors_height': '1.78, 2.87', 
-'vertical_angle_gradus': '0, 0, 0, 0', 'vertical_angle_min': '26.0, -26.5, 51.5, -52.0', 'rail': '157.4, 157.5, 126.8, 127.1'}, 
-
-{'station_name': '225', 'station_height': '1.33', 'sighting_points1': '102', 'sighting_points2': '226', 'sighting_points3': '101', 'sighting_points4': '226',
-'gorizontal_angle_gradus': '0, 251, 180, 71','gorizontal_angle_min': '0.5, 46.0, 1.5, 46.0', 
-'sighting_points_neighbors': '102', 'sighting_points_neighbors_height': '2.79', 
-'vertical_angle_gradus': '0, 0', 'vertical_angle_min': '30.0, -30.5', 'rail': '126.9, 127.2'}]
 
 stf2 = [{'station_name': '216', 'station_height': '1.40', 'sighting_points1': '215', 'sighting_points2': '101', 'sighting_points3': '215', 'sighting_points4': '101', 
 'gorizontal_angle_gradus1': '0',  'gorizontal_angle_min1': '0.5',
@@ -289,7 +270,7 @@ def calculations(JournalForm, StationForm):
     print('vertical_angles_gradus: ', mat[9])
     print('vertical_angles_min: ', mat[10])
     print('rails: ', mat[11])'''
-    print(df)
+    # print(df)
     #return()
 
 #calculations(JoF, stf2)
@@ -566,104 +547,7 @@ def calculations(JournalForm, StationForm):
         V_column_el = round(abs(h_pr[i] + h_obr[i])*100)
         V_column.append(V_column_el)
 
-    print(U_column)
-
-    #tacheometry = pd.read_excel("Тахеометрическая съемка_2Т30П.xls", sheet_name="Тахеометрия",header=None)
-    tacheometry = pd.read_excel(f"{path}{filename}", sheet_name="Тахеометрия",header=None)
-
-    index_table = [4]
-    for i in range(4, tacheometry.shape[0]):
-        if type(tacheometry.at[i, 0]) == type(np.nan):
-            index_table.append(i - 2)
-            index_table.append(i + 5)
-    index_table.append(tacheometry.shape[0] - 2)
-
-
-    index_table0 =[]
-    for l in range(0, len(index_table), 2):
-        index_table0.append(index_table[l])
-
-    #index_table0.append(index_table)
-    #index_table1 = sum(index_table0, [])
-
-    tacheometry_df = []
-    #2 <-> len(index_table)
-    for i in range(0, 1, 2):
-        tacheometry_df = tacheometry.loc[index_table[i]:index_table[i + 1], 0:17]
-        gor_limb_gr = list(tacheometry_df.loc[:,1])
-        gor_limb_min = list(tacheometry_df.loc[:,2])
-        gor_limb_rad = []
-        for j in range(len(gor_limb_gr)):
-            gor_limb_rad.append(radians(gor_limb_gr[j] + gor_limb_min[j]/60))
-        
-        ver_limb_gr = list(tacheometry_df.loc[:,4])
-        ver_limb_min = list(tacheometry_df.loc[:,5])
-        
-
-        tacheometry_df0 = tacheometry.iloc[index_table0[i] - 4:index_table0[i] - 2, 0:17]
-        tacheometry_df0_np = tacheometry_df0.to_numpy()
-        
-        KL = [tacheometry_df0_np[0, 8], tacheometry_df0_np[0, 10]]
-        KP = [tacheometry_df0_np[1, 8], tacheometry_df0_np[1, 10]]
-        if KL[0] == 0 and KP[0] == 0:
-            KL_min = KL[1]
-            KP_min = KP[1]
-        else:
-            KL_min = KL[0] + KL[1] * KL[0] / abs(KL[0])
-            KP_min = KP[0] + KP[1] * KP[0] / abs(KP[0])
-        
-        tach_MO_min = f_round0((KL_min + KP_min) / 2)
-
-        tach_MO_gr = (abs(tach_MO_min) // 60) * tach_MO_min / abs(tach_MO_min)
-        tach_MO_minn = (abs(tach_MO_min) % 60) * tach_MO_min / abs(tach_MO_min)
-
-        tach_i = tacheometry_df0_np[1,1]
-        
-        tach_I = list(tacheometry_df.loc[:,10])
-        
-        tach_V = list(tacheometry_df.loc[:,13])
-        
-        tach_H = tacheometry_df0_np[1,16]
-        print(tach_H)
-        tach_v = []
-        tach_v_gr = []
-        tach_v_min = []
-        tach_D = []
-        tach_S = []
-        tach_h = []
-        tach_H_array = []
-        for j in range(len(ver_limb_gr)):
-        
-            if ver_limb_gr[j] == 0:
-                ver = ver_limb_min[j]
-            else:
-                ver = ver_limb_gr[j] * 60 + ver_limb_min[j]# * ver_limb_gr[j] / abs(ver_limb_gr[j])
-            v_el = ver - tach_MO_min
-            tach_v.append(v_el)
-            
-            tach_v_gr_el = (abs(v_el) // 60) * v_el / abs(v_el)
-            tach_v_gr.append(tach_v_gr_el)
-            tach_v_min_el = (abs(v_el) % 60) * v_el / abs(v_el)
-            tach_v_min.append(tach_v_min_el)
-
-            for k in range(len(df1_numpy[0])): 
-                value = df1_numpy[0, k]
-                if value >= tach_I[j]:
-                    tach_popravka = df1_numpy[1, k]
-                    break
-            tach_d_el = tach_I[j] + tach_popravka   
-            tach_D.append(tach_d_el)
-
-            tach_v_el_rad_cos = cos(radians(v_el / 60))
-            tach_v_el_rad_tan = tan(radians(v_el / 60))
-            tach_s_el = tach_d_el * tach_v_el_rad_cos * tach_v_el_rad_cos
-            tach_S.append(tach_s_el)
-
-            tach_h_el = tach_s_el * tach_v_el_rad_tan + tach_i - tach_V[j]
-            tach_h.append(tach_h_el)
-
-            tach_H_el = tach_H + tach_h_el
-            tach_H_array.append(tach_H_el)
+    # print(U_column)
 
 
     def truncpart(n, k=1):
@@ -705,7 +589,7 @@ def calculations(JournalForm, StationForm):
     for i in range(len(array_gor_angle_min_mean)):
         if int(sum(array_gor_angle_min_popravka)*10) != int(-fb1_gor_angle_min_mean*10):
             array_gor_angle_min_popravka[i] += 0.1
-    print(fb1_gor_angle_min_mean,'\n',array_gor_angle_min_popravka)
+    # print(fb1_gor_angle_min_mean,'\n',array_gor_angle_min_popravka)
     array_gor_angle_unknown = []                                                                        #безымянный столбец G в таблице
     for i in range(len(array_betta)): 
         array_gor_angle_unknown.append(radians(array_gor_angle_min_popravka[i]/60) + array_betta[i])
@@ -846,7 +730,7 @@ def calculations(JournalForm, StationForm):
     sum_h_new = sum(array_h_new)
     v_i_t19 = -fh
     v_i_t19_div_sum_s = v_i_t19 / sum_s
-    print(v_i_t19,'\n', v_i_t19_div_sum_s )
+    # print(v_i_t19,'\n', v_i_t19_div_sum_s )
 
     #заполнение H 
     for i in range(len(array_h_new)):
@@ -877,23 +761,23 @@ def calculations(JournalForm, StationForm):
     #print(h_pr)
     #print(h_obr)
     #print(h_mean)
-    p_ = 'C:/Users/Илья/Desktop/'
+    p_ = 'C:/Users/SUROGA/Desktop/'
     f_ = 'konets_2_lista.xlsx'
     #print(U_column)
     def tabl1(db, db2, ar1_5, ar2_5, ar1_6, ar2_6, ar1_12, ar2_12, ar1_13,
     ar2_13, ar1_15, ar2_15, ar3_15, ar1_16, ar2_16, ar3_16,ar1_17, ar2_17, 
     ar3_17, ar1_20, d_h):#, path1, filename1):    
         
-        from pandas.io.excel import ExcelWriter
-        import numpy as np
+        # from pandas.io.excel import ExcelWriter
+        # import numpy as np
         lsttodf12 = [np.nan for x in db2[12]]
         lsttodf13 = [np.nan for x in db2[13]]
         lsttodf5 = [np.nan for x in db2[5]]
         lsttodf6 = [np.nan for x in db2[6]]
-        lsttodf15 = [np.nan for x in db2[15]]
-        lsttodf16 = [np.nan for x in db2[16]]
-        lsttodf17 = [np.nan for x in db2[17]]
-        lsttodf20 = [np.nan for x in db2[20]]
+        lsttodf15 = [np.nan for x in db2[15-1]]
+        lsttodf16 = [np.nan for x in db2[16-1]]
+        lsttodf17 = [np.nan for x in db2[17-1]]
+        lsttodf20 = [np.nan for x in db2[20-3]]
         lsttodf20[1] = "ΔD"
         k0 = 0
         k1 = 0
@@ -1089,13 +973,286 @@ def calculations(JournalForm, StationForm):
         
         return(df)
 
+    pathjason = f'C:/Program1/Microsoft VS Code/projekt/tahJournal/'
 
+    def loadJSON():
+        with open(f'{pathjason}test.json') as json_data:
+            data = json.load(json_data)
+        return data
+
+    totalstation = loadJSON()['total_station']
+
+
+
+
+
+
+
+    def tabl3(totalstation):
+        #len_df = 13
+        depth_df = -1
+        deps = [2]
+        sch = 2
+        for i in totalstation:
+            sch+= 4 + len(i['pickets'])
+            deps.append(sch)
+            depth_df += 4 + len(i['pickets'])
+    
+        deps.pop()
+        df = pd.DataFrame(columns = range(13), index = range(depth_df))
+        nn = np.nan
+    
+        slova2str = ["№ пикета", "Гор.лимб",nn, "Вертик.лимб",nn, "Угол наклона", nn, 'I', 'D', "S", 'v', 'h', "H"]
+        slova1str = ['I=',nn, 'M0=',nn,nn, 'КП=',nn,nn,'H=',nn,nn,nn,nn]
+        c1 = 1        
+        for i in range(len(totalstation)):
+            for j in range(len(slova2str)):
+                df[j][deps[i]] = slova2str[j]
+                df[j][deps[i]-1] = slova1str[j]
+            df[5][deps[i]-2] = 'КЛ='
+            df[0][deps[i]-2] = 'Станция '+str(totalstation[i]['station'])
+            df[6][deps[i]-2] = totalstation[i]['kl']['deg']
+            df[7][deps[i]-2] = totalstation[i]['kl']['min']
+            df[6][deps[i]-1] = totalstation[i]['kp']['deg']
+            df[7][deps[i]-1] = totalstation[i]['kp']['min']
+            df[0][deps[i]+1] = totalstation[i]['picket']
+            df[0][deps[i]+len(totalstation[i]['pickets'])] = totalstation[i]['picket']
+            c = 0
+    
+            for j in totalstation[i]['pickets']:       
+                df[1][deps[i]+1+c] = j['gor_limb']['deg']
+                df[2][deps[i]+1+c] = j['gor_limb']['min']
+                if 'vertic_limb' in j: 
+                    df[3][deps[i]+1+c] = j['vertic_limb']['deg']
+                    df[4][deps[i]+1+c] = j['vertic_limb']['min']
+                    df[0][deps[i]+1+c] = c1 #пока оставим так, на случай если не возникнет проблем
+                    c1+=1 
+                if 'I' in j:
+                    df[7][deps[i]+1+c] = j['I']
+                    df[10][deps[i]+1+c] = j['v']
+                if c+1 < deps[i] + len(totalstation[i]['pickets']): 
+                    c+=1
+        return(df)
+
+    stations = loadJSON()['stations']
+    list_points = []
+    slovar_number_level_station = {}
+    for i in range(len(stations)):
+        slovar_number_level_station[stations[i]['number']] = stations[i]['level_station']
+        list_points.append(stations[i]['number'])
+    # print(list_points)
+
+    tacheometry = tabl3(totalstation)
+    #print(tacheometry.head(25))
+
+    #\мой код
+
+
+
+
+    #мой код
+
+    def tabl3_1(tacheometry, slovar_number_level_station, df1_numpy, list_points, array_h):
+    
+        index_table = [4]
+        for i in range(4, tacheometry.shape[0]):
+            if type(tacheometry.at[i, 0]) == type(np.nan):
+                index_table.append(i - 2)
+                index_table.append(i + 5)
+        index_table.append(tacheometry.shape[0] - 2)
+
+        index_table0 = []
+        for l in range(0, len(index_table), 2):
+            index_table0.append(index_table[l])
+
+        tacheometry_df = []
+    
+        for i in index_table0:
+            for k in slovar_number_level_station.keys():
+                if tacheometry[0][i-4].endswith(str(k)):
+                    tacheometry[1][i-3] = slovar_number_level_station[k]
+                    break
+        
+            for k in range(len(list_points)):
+                if tacheometry[0][i-4].endswith(str(list_points[k])):
+                    tacheometry[9][i-3] = f_round0(array_h[k])
+        
+        p = 0 
+        array_i = []
+        array_KL_gr = []
+        array_KP_gr = []
+        array_KL_min = []
+        array_KP_min = []
+        array_tach_H = []
+        array_tach_MO_gr = []
+        array_tach_MO_min =[]
+
+        array_points = []
+        array_gor_limb_gr = []
+        array_gor_limb_min = []
+        array_ver_limb_gr = []
+        array_ver_limb_min =[]
+        array_tach_I = []
+        array_tach_V = []
+
+        array_tach_v_gr = []
+        array_tach_v_min = []
+        array_tach_D = []   
+        array_tach_S = []
+        array_tach_h = []
+        array_tach_H_array = []
+        for i in range(0, len(index_table), 2):
+        
+            points = list(tacheometry.loc[index_table[i]-1:index_table[i+1]+1, 0])
+            array_points.append(points)
+    
+            tacheometry_df = tacheometry.loc[index_table[i]:index_table[i+1], 0:12]
+    
+            gor_limb_gr = list(tacheometry_df.loc[:,1])
+            gor_limb_min = list(tacheometry_df.loc[:,2])
+    
+            gor_limb_rad = []
+            for j in range(len(gor_limb_gr)):
+                gor_limb_rad.append(radians(gor_limb_gr[j] + gor_limb_min[j]/60))
+    
+            gor_limb_grad = list(tacheometry.loc[index_table[i]-1:index_table[i+1]+1, 1])
+            array_gor_limb_gr.append(gor_limb_grad)
+            gor_limb_minn = list(tacheometry.loc[index_table[i]-1:index_table[i+1]+1, 2])
+            array_gor_limb_min.append(gor_limb_minn)
+    
+            ver_limb_gr = list(tacheometry_df.loc[:,3])
+            array_ver_limb_gr.append(ver_limb_gr)
+            ver_limb_min = list(tacheometry_df.loc[:,4])
+            array_ver_limb_min.append(ver_limb_min)
+        
+            tacheometry_df0 = tacheometry.iloc[index_table0[p] - 4:index_table0[p] - 2, 0:12]
+            tacheometry_df0_np = tacheometry_df0.to_numpy()
+        
+            KL = [tacheometry_df0_np[0, 6], tacheometry_df0_np[0, 7]]
+            KP = [tacheometry_df0_np[1, 6], tacheometry_df0_np[1, 7]]
+        
+            array_KL_gr.append(KL[0])
+            array_KL_min.append(KL[1])
+            array_KP_gr.append(KP[0])
+            array_KP_min.append(KP[1])
+    
+            if KL[0] == 0 and KP[0] == 0:
+                KL_min = KL[1]
+                KP_min = KP[1]
+            else:
+                KL_min = KL[0] * 60 + KL[1]
+                KP_min = KP[0] * 60 + KP[1]
+    
+            tach_MO_min = f_round0((KL_min + KP_min) / 2)
+    
+            tach_MO_gr = (abs(tach_MO_min) // 60) * tach_MO_min / abs(tach_MO_min)
+        
+            array_tach_MO_gr.append(tach_MO_gr)
+            tach_MO_minn = (abs(tach_MO_min) % 60) * tach_MO_min / abs(tach_MO_min)
+            array_tach_MO_min.append(tach_MO_minn)
+        
+            tach_i = tacheometry_df0_np[1,1]
+            array_i.append(tach_i)
+        
+            tach_I = list(tacheometry_df.loc[:,7])
+            array_tach_I.append(array_tach_I)
+
+            tach_V = list(tacheometry_df.loc[:,10])
+            array_tach_V.append(tach_V)
+
+            tach_H = tacheometry_df0_np[1,9]
+            array_tach_H.append(tach_H)
+
+            tach_v = []
+            tach_v_gr = []
+            tach_v_min = []
+            tach_D = []
+            tach_S = []
+            tach_h = []
+            tach_H_array = []
+            for j in range(len(ver_limb_gr)):
+    
+                if ver_limb_gr[j] == 0:
+                    ver = ver_limb_min[j]
+                else:
+                    ver = ver_limb_gr[j] * 60 + ver_limb_min[j]
+                v_el = ver - tach_MO_min
+                tach_v.append(v_el)
+        
+                tach_v_gr_el = f_round0(abs(v_el) // 60) * v_el / abs(v_el)
+                tach_v_gr.append(tach_v_gr_el)
+                tach_v_min_el = f_round0(abs(v_el) % 60) * v_el / abs(v_el)
+                tach_v_min.append(tach_v_min_el)
+
+            
+                for k in range(len(df1_numpy[0])): 
+                    value = df1_numpy[0, k]
+                    if value >= tach_I[j]:
+                        tach_popravka = df1_numpy[1, k]
+                        break
+                tach_d_el = tach_I[j] + tach_popravka   
+                tach_D.append(tach_d_el)
+            
+                tach_v_el_rad_cos = cos(radians(v_el / 60))
+                tach_v_el_rad_tan = tan(radians(v_el / 60))
+                tach_s_el = f_round0(tach_d_el * tach_v_el_rad_cos * tach_v_el_rad_cos)
+                tach_S.append(tach_s_el)
+            
+                tach_h_el = f_round0(tach_s_el * tach_v_el_rad_tan + tach_i - tach_V[j], 2)
+                tach_h.append(tach_h_el)
+            
+                tach_H_el = f_round0(tach_H + tach_h_el)
+                tach_H_array.append(tach_H_el)
+            array_tach_v_gr.append(tach_v_gr)
+            array_tach_v_min.append(tach_v_min)
+            array_tach_D.append(tach_D)
+            array_tach_S.append(tach_S)
+            array_tach_h.append(tach_h)
+            array_tach_H_array.append(tach_H_array)
+            p+=1
+        
+    
+        b = 0
+    
+        for i in index_table0:
+            tacheometry[3][i-3] = array_tach_MO_gr[b]
+            tacheometry[4][i-3] = array_tach_MO_min[b]
+        
+            l = 0
+            for j in range(len(array_tach_v_gr[b])):
+                tacheometry[5][i+l] = array_tach_v_gr[b][j]
+                tacheometry[6][i+l] = array_tach_v_min[b][j]
+                tacheometry[8][i+l] = array_tach_D[b][j]
+                tacheometry[9][i+l] = array_tach_S[b][j]
+                tacheometry[11][i+l] = array_tach_h[b][j]
+                tacheometry[12][i+l] = array_tach_H_array[b][j]
+                l+=1
+            b+=1
+        return(tacheometry)
+
+    tacheometry = tabl3_1(tacheometry, slovar_number_level_station, df1_numpy, list_points, array_h)
+    #print(tacheometry.head(30))
+
+
+
+    #ДЛЯ НИКИТЫ
     def vivodexl(path1, filename1, db1, db2='', db3=''):
+        with ExcelWriter(f"{path1}{filename1}", mode="w") as writer:
+            db1.to_excel(writer, sheet_name='ход', index=None, header=None)
+            #respon["df"] = db1.replace(np.nan, "").values.tolist()    никита, раскомменьть
+            if type(db2) != type(''):    
+                db2.to_excel(writer, sheet_name='Ведомость ур-я', index=None, header=None)
+                #respon["df2"] = db2.replace(np.nan, "").values.tolist()     никита, раскомменьть
+                #db3.to_excel(writer, sheet_name='Тахеометрия', index=None, header=None)
+            if type(db3) != type(''):
+                db3.to_excel(writer, sheet_name='Тахеометрия', index=None, header=None)
+        #print(db1)
+    '''def vivodexl(path1, filename1, db1, db2='', db3=''):
         with ExcelWriter(f"{path1}{filename1}", mode="w") as writer:
             db1.to_excel(writer, sheet_name='ход', index=None, header=None)
             #if db2 != '' and db2 != '':    
             db2.to_excel(writer, sheet_name='Ведомость ур-я', index=None, header=None)
-                #db3.to_excel(writer, sheet_name='Тахеометрия', index=None, header=None)
+                #db3.to_excel(writer, sheet_name='Тахеометрия', index=None, header=None)'''
         #print(db1)
         #print(db2)
         #print(db3)
@@ -1121,8 +1278,12 @@ def calculations(JournalForm, StationForm):
     #dopusk_с20, array_dir_angle_gr, last_dir_angle_gr, array_dir_angle_min, last_dir_angle_min,
     #sum_s, array_s, array_dx, array_dx_popravka, stoLperar, array_dy, array_dy_popravka,
     #stoMperar)
-
-    #vivodexl(p_, f_, sheet1, sheet2)
     
-    #return(sheet1, sheet2)
-    return(sheet1, sheet2)
+    vivodexl(p_, f_, sheet1, sheet2, tacheometry)
+    
+
+    return(sheet1, sheet2, tacheometry)
+
+
+
+calculations(JoF,stf2)
