@@ -1284,6 +1284,3 @@ def calculations(JournalForm, StationForm):
 
     return(sheet1, sheet2, tacheometry)
 
-
-
-calculations(JoF,stf2)
