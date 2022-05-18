@@ -281,8 +281,17 @@ margin: 0;
 .div-table-col {
   float: left; /* fix for  buggy browsers */
   display: table-column;         
-  width: 200px;         
-  background-color: #ccc;  
+  width: 200px;        
+}
+
+.RowName{
+  display: grid;
+  grid-template-columns: repeat(auto-fit,12%);
+  justify-content: space-between;
+}
+.RowName div p{
+  align-items: center;
+  justify-content: center;
 }
 
 .button-inline{
@@ -324,26 +333,31 @@ margin: 0;
 .div-table-row4{
   display:flex;
   flex-direction: column;
+  justify-content: center;
 }
 
 .div-table-row5{
   display:flex;
   flex-direction: column;
+  justify-content: center;
 }
 
 .div-table-row6{
   display:flex;
   flex-direction: column;
+  justify-content: center;
 }
 
 .div-table-row7{
   display:flex;
   flex-direction: column;
+  justify-content: center;
 }
 
 .div-table-row8{
   display:flex;
   flex-direction: column;
+  justify-content: center;
 }
 
 #PositionTable1{
@@ -369,7 +383,7 @@ margin: 0;
   display: grid;
   grid-template-columns:30% 70%;
   align-items: center;
-  zoom: 1.3;
+  zoom:1.1;
 } 
 
 .maindiv{

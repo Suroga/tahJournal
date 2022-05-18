@@ -56,9 +56,9 @@ class VedomostForm(forms.Form):
     last_dir_angle_gr   = forms.IntegerField(label='last_dir_angle_gr')
     last_dir_angle_min = forms.IntegerField(label='last_dir_angle_min')
 
-
-
-
+class TaheometriaForm(forms.Form):
+    pass
+ 
 
 
 
