@@ -49,7 +49,7 @@ stf2 = [{'station_name': '216', 'station_height': '1.40', 'sighting_points1': '2
 'vertical_angle_gradus1': '0', 'vertical_angle_min1': '30.0', 'rail1': '126.9',
 'vertical_angle_gradus2': '0', 'vertical_angle_min2': '-30.5', 'rail2': '127.2'}]
 
-def calculations(JournalForm, StationForm):
+def calculations(JournalForm = JoF, StationForm = stf2):
     #import pandas as pd
     #from pandas.io.excel import ExcelWriter
     #from decimal import *
@@ -761,8 +761,8 @@ def calculations(JournalForm, StationForm):
     #print(h_pr)
     #print(h_obr)
     #print(h_mean)
-    p_ = 'C:/Users/SUROGA/Desktop/'
-    f_ = 'konets_2_lista.xlsx'
+    p_ = '/app/journal/json/test/'
+    f_ = 'TahJournal.xlsx'
     #print(U_column)
     def tabl1(db, db2, ar1_5, ar2_5, ar1_6, ar2_6, ar1_12, ar2_12, ar1_13,
     ar2_13, ar1_15, ar2_15, ar3_15, ar1_16, ar2_16, ar3_16,ar1_17, ar2_17, 
@@ -973,7 +973,7 @@ def calculations(JournalForm, StationForm):
         
         return(df)
 
-    pathjason = f'C:/Program1/Microsoft VS Code/projekt/tahJournal/'
+    pathjason = f'/app/journal/json/'
 
     def loadJSON():
         with open(f'{pathjason}test.json') as json_data:

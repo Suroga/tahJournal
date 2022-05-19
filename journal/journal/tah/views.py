@@ -1,9 +1,11 @@
+import os
 from re import U
 from django.http import HttpResponse
 from django.template import loader
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
+from django.http import HttpResponse, Http404
 import datetime
 from .forms import JournalForm, StationFormset, StationForm, VedomostForm
 from .models import Journal, Station, Vedomost
@@ -26,48 +28,50 @@ def calculation1(request):
             print(form1.cleaned_data['journal_name'])
             stations = int(request.POST['form-TOTAL_FORMS'])
             print(stations)
-
             username = request.user.username
             u = User.objects.get(username=username)
             #ИЛЬЯ, ДЕЛАЙ ТУТ
             j = Journal.objects.create(journal_name=form1.cleaned_data['journal_name'], meters=form1.cleaned_data['meters'], meters_corrections=form1.cleaned_data['meters_corrections'], date_of_creation=datetime.datetime.now(), user=u)
+            JournalIN = {"meters": form1.cleaned_data['journal_name'], "meters_corrections": form1.cleaned_data['meters'] }
             for station in form2.cleaned_data:
-                Station.objects.create(journal=j,
-                    station_name=station['station_name'],
-                    station_height=station['station_height'],
-                    sighting_points1=station['sighting_points1'],
-                    sighting_points2=station['sighting_points2'],
-                    sighting_points3=station['sighting_points3'],
-                    sighting_points4=station['sighting_points4'],
-                    gorizontal_angle_gradus1=station['gorizontal_angle_gradus1'],
-                    gorizontal_angle_gradus2=station['gorizontal_angle_gradus2'],
-                    gorizontal_angle_gradus3=station['gorizontal_angle_gradus3'],
-                    gorizontal_angle_gradus4=station['gorizontal_angle_gradus4'],
-                    gorizontal_angle_min1=station['gorizontal_angle_min1'],
-                    gorizontal_angle_min2=station['gorizontal_angle_min2'],
-                    gorizontal_angle_min3=station['gorizontal_angle_min3'],
-                    gorizontal_angle_min4=station['gorizontal_angle_min4'],
-                    sighting_points_neighbors1=station['sighting_points_neighbors1'],
-                    sighting_points_neighbors2=station['sighting_points_neighbors2'],
-                    sighting_points_neighbors_height1=station['sighting_points_neighbors_height1'],
-                    sighting_points_neighbors_height2=station['sighting_points_neighbors_height2'],
-                    vertical_angle_gradus1=station['vertical_angle_gradus1'],
-                    vertical_angle_gradus2=station['vertical_angle_gradus2'],
-                    vertical_angle_gradus3=station['vertical_angle_gradus3'],
-                    vertical_angle_gradus4=station['vertical_angle_gradus4'],
-                    vertical_angle_min1=station['vertical_angle_min1'],
-                    vertical_angle_min2=station['vertical_angle_min2'],
-                    vertical_angle_min3=station['vertical_angle_min3'],
-                    vertical_angle_min4=station['vertical_angle_min4'],
-                    rail1=station['rail1'],
-                    rail2=station['rail2'],
-                    rail3=station['rail3'],
-                    rail4=station['rail4'],                                    
-                    )
-            v = Vedomost.objects.create( array_dir_angle_gr = form3.cleaned_data['array_dir_angle_gr'], array_dir_angle_min = form3.cleaned_data['array_dir_angle_min'], last_dir_angle_gr = form3.cleaned_data['last_dir_angle_gr'], last_dir_angle_min = form3.cleaned_data['last_dir_angle_min'])
+                print(station)
+                # Station.objects.create(journal=j,
+                #     station_name=station['station_name'],
+                #     station_height=station['station_height'],
+                #     sighting_points1=station['sighting_points1'],
+                #     sighting_points2=station['sighting_points2'],
+                #     sighting_points3=station['sighting_points3'],
+                #     sighting_points4=station['sighting_points4'],
+                #     gorizontal_angle_gradus1=station['gorizontal_angle_gradus1'],
+                #     gorizontal_angle_gradus2=station['gorizontal_angle_gradus2'],
+                #     gorizontal_angle_gradus3=station['gorizontal_angle_gradus3'],
+                #     gorizontal_angle_gradus4=station['gorizontal_angle_gradus4'],
+                #     gorizontal_angle_min1=station['gorizontal_angle_min1'],
+                #     gorizontal_angle_min2=station['gorizontal_angle_min2'],
+                #     gorizontal_angle_min3=station['gorizontal_angle_min3'],
+                #     gorizontal_angle_min4=station['gorizontal_angle_min4'],
+                #     sighting_points_neighbors1=station['sighting_points_neighbors1'],
+                #     sighting_points_neighbors2=station['sighting_points_neighbors2'],
+                #     sighting_points_neighbors_height1=station['sighting_points_neighbors_height1'],
+                #     sighting_points_neighbors_height2=station['sighting_points_neighbors_height2'],
+                #     vertical_angle_gradus1=station['vertical_angle_gradus1'],
+                #     vertical_angle_gradus2=station['vertical_angle_gradus2'],
+                #     vertical_angle_gradus3=station['vertical_angle_gradus3'],
+                #     vertical_angle_gradus4=station['vertical_angle_gradus4'],
+                #     vertical_angle_min1=station['vertical_angle_min1'],
+                #     vertical_angle_min2=station['vertical_angle_min2'],
+                #     vertical_angle_min3=station['vertical_angle_min3'],
+                #     vertical_angle_min4=station['vertical_angle_min4'],
+                #     rail1=station['rail1'],
+                #     rail2=station['rail2'],
+                #     rail3=station['rail3'],
+                #     rail4=station['rail4'],                                    
+                #     )
+                
+            # v = Vedomost.objects.create( array_dir_angle_gr = form3.cleaned_data['array_dir_angle_gr'], array_dir_angle_min = form3.cleaned_data['array_dir_angle_min'], last_dir_angle_gr = form3.cleaned_data['last_dir_angle_gr'], last_dir_angle_min = form3.cleaned_data['last_dir_angle_min'])
             #ИЛЬЯ, ДЕЛАЙ ТУТ
             calculations()            
-            return render(request, 'tah/calculation1.html', {'form1': form1, 'form2': form2, 'form3': form3})
+            return render(request, 'tah/results.html', {'form1': form1, 'form2': form2, 'form3': form3}) 
         else:
             return render(request, 'tah/calculation1.html', {'form1': form1, 'form2': form2, 'form3': form3})
     else:
@@ -89,6 +93,11 @@ def results(request):
     else:
         pass
     return render(request, 'tah/results.html')
+
+def downloadfile(request):
+        return render(request, 'tah/TahJournal.xlsx')
+        
+
     
     
     
