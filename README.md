@@ -1,6 +1,6 @@
 # Tah-journal
 
-Расчёт данных для заполнения тахеометрического журнала
+Web-приложение направленное на расчёт данных для заполнения тахеометрического журнала
 
 [![Built with Cookiecutter Django](https://img.shields.io/badge/built%20with-Cookiecutter%20Django-ff69b4.svg?logo=cookiecutter)](https://github.com/cookiecutter/cookiecutter-django/)
 [![Black code style](./journal/static/images/logo.png)](https://github.com/ambv/black)
